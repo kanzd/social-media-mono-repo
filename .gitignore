@@ -1,0 +1,8 @@
+# Ignore all node_modules folders in any directory
+**/node_modules/
+
+# Ignore package-lock.json in the root directory
+package-lock.json
+
+**/build/
+**/public/images

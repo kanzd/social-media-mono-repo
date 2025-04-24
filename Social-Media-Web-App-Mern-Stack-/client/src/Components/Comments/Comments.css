@@ -1,0 +1,7 @@
+.PostComments{
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    max-height: 271px; /* adjust depending on your comment height */
+    overflow-y: auto;
+}
