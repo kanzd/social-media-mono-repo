@@ -57,40 +57,43 @@ const PostShare = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const newPost = {
-            userId: user._id,
-            desc: desc.current.value,
-        }
-
+        // const newPost = {
+        //     userId: user._id,
+        //     desc: desc.current.value,
+        // }
+        const data = new FormData();
+        data.append("userId", user._id);
+        data.append("desc", desc.current.value);
         if (image) {
-            const data = new FormData();
+            
             const filename = Date.now() + image.name;
             data.append("name", filename);
             data.append("file", image);
+            data.append("type", 'image');
+            
 
-            newPost.image = filename;
+            // newPost.image = filename;
 
-            try {
-                dispatch(uploadImage(data))
-            } catch (error) {
-                console.log(error)
-            }
+            // try {
+            //     dispatch(uploadImage(data))
+            // } catch (error) {
+            //     console.log(error)
+            // }
         }
         if (video) {
-            const data = new FormData();
             const filename = Date.now() + video.name;
             data.append("name", filename);
             data.append("file", video);
+            data.append("type", 'video');
+            // newPost.video = filename;
 
-            newPost.video = filename;
-
-            try {
-                dispatch(uploadImage(data));
-            } catch (error) {
-                console.log(error);
-            }
+            // try {
+            //     dispatch(uploadImage(data));
+            // } catch (error) {
+            //     console.log(error);
+            // }
         }
-        dispatch(uploadPost(newPost))
+        dispatch(uploadPost(data))
         reset()
     }
 

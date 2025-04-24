@@ -9,7 +9,7 @@ const {
   AWS_SECRET,
   AWS_ACCESS_KEY,
 } = require("../secrets.js");
-const { S3Client } = require("@aws-sdk/client-s3");
+// const { S3Client } = require("@aws-sdk/client-s3");
 const { createPresignedPost } = require("@aws-sdk/s3-presigned-post");
 
 const configuration = new GoogleGenerativeAI(process.env.GENERATIVE_API_KEY);
