@@ -35,10 +35,10 @@ const Post = ({ data,id,onUpdate }) => {
         <span>{data.desc}</span>
       </div>
       
-      <img src={data.image ? 'http://localhost:4000/images/' + data.image : " "} alt="" />
+      <img src={data.image ? data.image : " "} alt="" />
       {data.video && (
                 <video controls>
-                    <source src={'http://localhost:4000/images/' + data.video} type="video/mp4" />
+                    <source src={data.video} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             )}

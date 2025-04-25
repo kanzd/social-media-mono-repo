@@ -24,7 +24,7 @@ const UserFollow = ({ person }) => {
         <div className="follower">
 
             <div>
-                <img src={person.profilePicture ? serverPublic + person.profilePicture : serverPublic + "defaultProfile.png"} alt="" className='followerImg' />
+                <img src={person.profilePicture ?  person.profilePicture : serverPublic + "defaultProfile.png"} alt="" className='followerImg' />
                 <div className="name">
                     <span>{person.name}</span>
                     <span>@{person.name} </span>

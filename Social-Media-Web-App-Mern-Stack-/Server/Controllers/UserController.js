@@ -1,7 +1,8 @@
 import UserModel from "../Models/userModel.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+import { createClient } from '@supabase/supabase-js'
+const supabase = createClient('https://ybutcjrfzigxxjnxybta.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidXRjanJmemlneHhqbnh5YnRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0NjU2NzgsImV4cCI6MjA2MTA0MTY3OH0.kleN4UkCxxqmpkhgMhNCUaOMseB5ZFIm88t5IcVNaUM')
 
 // get All users
 export const getAllUsers = async (req, res) => {
@@ -48,7 +49,7 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     const id = req.params.id;
-
+    // console.log(req.files)
     const { _id, password } = req.body;
 
     if (id === _id) {
@@ -60,6 +61,31 @@ export const updateUser = async (req, res) => {
         }
 
         try {
+            if (req.files.profilePicture[0]){
+                const { data,error } = await supabase.storage.from('hik8').upload(new Date().getTime().toString(), req.files.profilePicture[0].buffer,{
+                    contentType: req.files.profilePicture[0].mimetype, // <- This is the MIME type
+                  })
+                  console.log(error)
+                const { data:newData } = supabase.storage.from('hik8').getPublicUrl(data.path);
+                // console.log(newData,'newdata')
+                req.body.profilePicture = newData.publicUrl
+                // publicUrl = newData.publicUrl
+        
+                
+            }
+            if (req.files.coverPicture[0]){
+                const { data,error } = await supabase.storage.from('hik8').upload(new Date().getTime().toString(), req.files.coverPicture[0].buffer,{
+                    contentType: req.files.coverPicture[0].mimetype, // <- This is the MIME type
+                  })
+                console.log(error)
+                const { data:newData } = supabase.storage.from('hik8').getPublicUrl(data.path);
+                // console.log(newData)
+                req.body.coverPicture = newData.publicUrl
+                // publicUrl = newData.publicUrl
+        
+                
+            }
+            console.log(id,req.body)
             const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
 
             const token = jwt.sign(
@@ -69,6 +95,7 @@ export const updateUser = async (req, res) => {
 
             res.status(200).json({ user, token })
         } catch (error) {
+            console.log(error)
             res.status(500).json(error)
         }
     } else {
