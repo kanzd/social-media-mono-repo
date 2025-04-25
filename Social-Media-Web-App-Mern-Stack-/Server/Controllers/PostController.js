@@ -11,7 +11,7 @@ export const createPost = async (req, res) => {
     let publicUrl = ''
     // console.log(req)
     if (req.file){
-        const { data,error } = await supabase.storage.from('hik8').upload(req.file.originalname+new Date().getTime().toString(), req.file.buffer,{
+        const { data,error } = await supabase.storage.from('hik8').upload(new Date().getTime().toString(), req.file.buffer,{
             contentType: req.file.mimetype, // <- This is the MIME type
           })
         const { data:newData } = supabase.storage.from('hik8').getPublicUrl(data.path);

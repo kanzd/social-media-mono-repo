@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import './Auth.css';
-import Logo from '../../Img/logo.png';
+import Logo from '../../Img/logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn, signUp } from '../../actions/AuthAction.js';
 import toast from 'react-hot-toast';

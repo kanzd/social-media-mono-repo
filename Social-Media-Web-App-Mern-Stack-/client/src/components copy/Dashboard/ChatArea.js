@@ -16,14 +16,15 @@ import {
 } from "@chakra-ui/react";
 import { FaFileUpload } from "react-icons/fa";
 import { marked } from "marked";
-
+import { createClient } from '@supabase/supabase-js'
+import Logo from '../../Img/logo2.svg'
 import chatContext from "../../context/chatContext";
 import ChatAreaTop from "./ChatAreaTop";
 import FileUploadModal from "../miscellaneous/FileUploadModal";
 import ChatLoadingSpinner from "../miscellaneous/ChatLoadingSpinner";
 import axios from "axios";
 import SingleMessage from "./SingleMessage";
-
+const supabase = createClient('https://ybutcjrfzigxxjnxybta.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlidXRjanJmemlneHhqbnh5YnRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0NjU2NzgsImV4cCI6MjA2MTA0MTY3OH0.kleN4UkCxxqmpkhgMhNCUaOMseB5ZFIm88t5IcVNaUM')
 const scrollbarconfig = {
   "&::-webkit-scrollbar": {
     width: "5px",
@@ -165,37 +166,37 @@ export const ChatArea = () => {
     }
   };
 
-  const getPreSignedUrl = async (fileName, fileType) => {
-    if (!fileName || !fileType) return;
-    try {
-      const response = await fetch(
-        `${hostName}/user/presigned-url?filename=${fileName}&filetype=${fileType}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+  // const getPreSignedUrl = async (fileName, fileType) => {
+  //   if (!fileName || !fileType) return;
+  //   try {
+  //     const response = await fetch(
+  //       `${hostName}/user/presigned-url?filename=${fileName}&filetype=${fileType}`,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "auth-token": localStorage.getItem("token"),
+  //         },
+  //       }
+  //     );
 
-      if (!response.ok) {
-        throw new Error("Failed to get pre-signed URL");
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      toast({
-        title: error.message,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  };
+  //     if (!response.ok) {
+  //       throw new Error("Failed to get pre-signed URL");
+  //     }
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //     toast({
+  //       title: error.message,
+  //       status: "error",
+  //       duration: 3000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
 
   const handleSendMessage = async (e, messageText, file) => {
     e.preventDefault();
-    const awsHost = "https://conversa-chat.s3.ap-south-1.amazonaws.com/";
+    // const awsHost = "https://conversa-chat.s3.ap-south-1.amazonaws.com/";
 
     if (!messageText) {
       messageText = document.getElementById("new-message")?.value || "";
@@ -215,43 +216,61 @@ export const ChatArea = () => {
       });
       return;
     }
-
-    let key;
+    let fileUrl;
+    // let key;
     if (file) {
-      try {
-        const { url, fields } = await getPreSignedUrl(file.name, file.type);
-        const formData = new FormData();
-        Object.entries({ ...fields, file }).forEach(([k, v]) => {
-          formData.append(k, v);
-        });
-
-        const response = await axios.post(url, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        if (response.status !== 201) {
-          throw new Error("Failed to upload file");
-        }
-
-        key = fields.key;
-      } catch (error) {
-        toast({
+      let { data,error } = await supabase.storage.from('hik8').upload(new Date().getTime().toString(),file,{
+        contentType: file.type, // ← this sets the correct MIME type!
+        upsert: false,  // <- This is the MIME type
+      })
+      if(error){
+          toast({
           title: error.message,
           status: "error",
           duration: 3000,
           isClosable: true,
         });
         return;
+      
       }
+      console.log(data,error)
+    const { data:newData } = supabase.storage.from('hik8').getPublicUrl(data.path);
+    fileUrl = newData.publicUrl
+
+      // try {
+      //   const { url, fields } = await getPreSignedUrl(file.name, file.type);
+      //   const formData = new FormData();
+      //   Object.entries({ ...fields, file }).forEach(([k, v]) => {
+      //     formData.append(k, v);
+      //   });
+
+      //   const response = await axios.post(url, formData, {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   });
+
+      //   if (response.status !== 201) {
+      //     throw new Error("Failed to upload file");
+      //   }
+
+      //   key = fields.key;
+      // } catch (error) {
+      //   toast({
+      //     title: error.message,
+      //     status: "error",
+      //     duration: 3000,
+      //     isClosable: true,
+      //   });
+      //   return;
+      // }
     }
 
     const data = {
       text: messageText,
       conversationId: activeChatId,
       senderId: user._id,
-      imageUrl: file ? `${awsHost}${key}` : null,
+      imageUrl: file ? `${fileUrl}` : null,
     };
 
     socket.emit("send-message", data);
@@ -428,7 +447,7 @@ export const ChatArea = () => {
             textAlign="center"
           >
             <Text fontSize="6vw" fontWeight="bold" fontFamily="Work sans">
-              Hik8
+            <img src={Logo}></img>
             </Text>
             <Text fontSize="2vw">Online chatting app</Text>
             <Text fontSize="md">Select a chat to start messaging</Text>
