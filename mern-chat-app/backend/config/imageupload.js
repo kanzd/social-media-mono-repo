@@ -24,6 +24,7 @@ const imageupload = async (file, usepreset) => {
       options = { resource_type: "auto" };
     }
     const { data, error } = await supabase.storage.from('hik8').upload(file.name, file)
+    const { data:newData } = supabase.storage.from('hik8').getPublicUrl(data.path);
     // const result = await new Promise((resolve, reject) => {
     //   cloudinary.uploader
     //     .upload_stream(options, (error, result) => {
@@ -39,8 +40,7 @@ const imageupload = async (file, usepreset) => {
     // });
 
     // Extract the secure URL from the Cloudinary response
-    const imageUrl = data.fullPath;
-    console.log("imageUrl", imageUrl);
+    const imageUrl = newData.publicUrl;
     return imageUrl;
   } catch (error) {
     console.error(error);

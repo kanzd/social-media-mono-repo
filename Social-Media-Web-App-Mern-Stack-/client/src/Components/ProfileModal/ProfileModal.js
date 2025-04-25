@@ -2,7 +2,7 @@ import { Modal, useMantineTheme } from '@mantine/core';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { uploadImage } from '../../actions/UploadAction';
+// import { uploadImage } from '../../actions/UploadAction';
 import { updateUser } from '../../actions/UserAction';
 
 
@@ -40,41 +40,42 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let UserData = formData;
-
+    // let UserData = formData;
+    const data = new FormData();
+    // const fileName = Date.now() + coverImage.name;
+    
+    data.append("password", password);
+    Object.keys(formData).forEach((value,index)=>{
+      data.append(value,formData[value])
+    })
+    // data.append("_id", formData._id);
+    // let files = {}
     if (profileImage) {
-      const data = new FormData();
-      const fileName = Date.now() + profileImage.name;
-      data.append("name", fileName);
-      data.append("file", profileImage);
+      data.append('profilePicture',profileImage)
+      // files.profilePicture = 
+      // UserData.profilePicture = fileName;
 
-      UserData.profilePicture = fileName;
-
-      try {
-        dispatch(uploadImage(data))
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   dispatch(uploadImage(data))
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
-
-
     if (coverImage) {
-      const data = new FormData();
-      const fileName = Date.now() + coverImage.name;
-      data.append("name", fileName);
-      data.append("file", coverImage);
+      data.append('coverPicture',coverImage)
+      // files.coverPicture = coverImage
+     
+      // UserData.coverPicture = fileName;
 
-      UserData.coverPicture = fileName;
-
-      try {
-        dispatch(uploadImage(data))
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   dispatch(uploadImage(data))
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
 
-
-    dispatch(updateUser(param.id, UserData));
+    // data.append("files", files);
+    dispatch(updateUser(param.id, data));
     setModalOpened(false);
   }
 
@@ -99,10 +100,8 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
           <h3>Update Your info</h3>
 
           <div>
-            <input type="text" placeholder='First Name' className='infoInput' name="firstname"
-              onChange={handleChange} value={formData.firstname} />
-            <input type="text" placeholder='Last Name' className='infoInput' name="lastname"
-              onChange={handleChange} value={formData.lastname} />
+            <input type="text" placeholder='Name' className='infoInput' name="name"
+              onChange={handleChange} value={formData.name} />
           </div>
 
           <div>

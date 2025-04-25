@@ -16,7 +16,7 @@ import Auth from "./Authentication/Auth";
 import { useContext, useEffect } from "react";
 import chatContext from "../context/chatContext";
 import { Link, useNavigate } from "react-router-dom";
-
+import Logo from '../Img/logo2.svg'
 const Home = () => {
   // context
   const context = useContext(chatContext);
@@ -45,8 +45,10 @@ const Home = () => {
     <Box h={"max-content"} verticalAlign="middle">
       <Flex direction="column" align="center" justify="center" minH="80vh">
         <Box textAlign="center">
+          
           <Text fontSize={"7xl"} fontWeight={"bold"} fontFamily={"Work sans"}>
-            Hik 8
+            {/* Hik 8 */}
+            <img src={Logo}></img>
           </Text>
           <Text fontSize="xl" fontWeight="bold" mb={4}>
             Online Chatting App
