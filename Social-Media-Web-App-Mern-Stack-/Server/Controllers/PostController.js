@@ -99,26 +99,28 @@ export const timeline = async (req, res) => {
         { $project: { followingPosts: 1, _id: 0 } }
       ]);
   
-      const defaultTimeline = ownPosts
-        .concat(...(followingAgg[0]?.followingPosts || []))
-        .sort((a, b) => b.createdAt - a.createdAt);
+      const followingPosts = followingAgg[0]?.followingPosts || [];
   
       // 3. Signal posts: those you’ve liked or commented on
-      const liked     = await postModel.find({ likes: userId });
+      const liked = await postModel.find({ likes: userId });
       const commented = await postModel.find({ 'comments.userId': userId });
       const interestPosts = [...liked, ...commented];
-
-      console.log(followingAgg)
-      // 4. If no signals → random fallback
-      if (followingAgg[0]?.followingPosts.length === 0) {
+  
+      // 4. If no following posts → random fallback
+      let combinedPosts = ownPosts.concat(followingPosts);
+      
+      // If no following posts exist, add random posts to the timeline
+      if (followingPosts.length === 0) {
         const randomPosts = await postModel.aggregate([
           { $sample: { size: 20 } }
         ]);
-        return res.status(200).json(randomPosts);
+        combinedPosts = combinedPosts.concat(randomPosts);
       }
   
-      // 5. Otherwise → default (chronological) feed
-      return res.status(200).json(defaultTimeline);
+      // Shuffle the combined posts array to make the timeline random
+      const shuffledPosts = combinedPosts.sort(() => Math.random() - 0.5);
+  
+      return res.status(200).json(shuffledPosts);
   
     } catch (error) {
       res.status(500).json(error);
