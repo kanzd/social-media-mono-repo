@@ -110,16 +110,13 @@ export const timeline = async (req, res) => {
       let combinedPosts = ownPosts.concat(followingPosts);
       
       // If no following posts exist, add random posts to the timeline
-      if (followingPosts.length === 0) {
         const randomPosts = await postModel.aggregate([
           { $sample: { size: 20 } }
         ]);
         combinedPosts = combinedPosts.concat(randomPosts);
-      }
-  
+      
       // Shuffle the combined posts array to make the timeline random
       const shuffledPosts = combinedPosts.sort(() => Math.random() - 0.5);
-  
       return res.status(200).json(shuffledPosts);
   
     } catch (error) {
