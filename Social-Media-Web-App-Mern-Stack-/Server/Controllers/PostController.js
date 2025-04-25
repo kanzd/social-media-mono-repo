@@ -76,75 +76,52 @@ export const like_dislike_Post = async (req, res) => {
 };
 
 
-/**
- * Get recommended posts for a user's timeline.
- * If the user has no likes/comments → returns default timeline.
- * Otherwise returns up to 20 newest posts ranked by NLP similarity.
- */
+// Get timeline a Posts
+// Get personalized timeline (with random fallback)
 export const timeline = async (req, res) => {
-  const userId = req.params.id;
+    const userId = req.params.id;
+  
+    try {
+      // 1. Your own posts
+      const ownPosts = await postModel.find({ userId });
+  
+      // 2. Your followees’ posts
+      const followingAgg = await UserModel.aggregate([
+        { $match: { _id: new mongoose.Types.ObjectId(userId) } },
+        {
+          $lookup: {
+            from: 'posts',
+            localField: 'following',
+            foreignField: 'userId',
+            as: 'followingPosts'
+          }
+        },
+        { $project: { followingPosts: 1, _id: 0 } }
+      ]);
+  
+      const defaultTimeline = ownPosts
+        .concat(...(followingAgg[0]?.followingPosts || []))
+        .sort((a, b) => b.createdAt - a.createdAt);
+  
+      // 3. Signal posts: those you’ve liked or commented on
+      const liked     = await postModel.find({ likes: userId });
+      const commented = await postModel.find({ 'comments.userId': userId });
+      const interestPosts = [...liked, ...commented];
 
-  try {
-    // 1. Default timeline: own + followings
-    const ownPosts = await postModel.find({ userId });
-    const followingAgg = await UserModel.aggregate([
-      { $match: { _id: new mongoose.Types.ObjectId(userId) } },
-      {
-        $lookup: {
-          from: 'posts',
-          localField: 'following',
-          foreignField: 'userId',
-          as: 'followingPosts'
-        }
-      },
-      { $project: { followingPosts: 1, _id: 0 } }
-    ]);
-    const defaultTimeline = ownPosts
-      .concat(...(followingAgg[0]?.followingPosts || []))
-      .sort((a, b) => b.createdAt - a.createdAt);
-
-    // 2. Gather all posts the user has liked
-    const liked = await postModel.find({ likes: userId });
-    // 3. Gather all posts the user has commented on (if you have a comment schema)
-    //    Assuming each post has `comments: [{ userId, text, ... }]`
-    const commented = await postModel.find({ 'comments.userId': userId });
-
-    const interestPosts = [...liked, ...commented];
-    if (interestPosts.length === 0) {
-      // No signals → fallback
-      return res.status(200).json(defaultTimeline);
-    }
-
-    // 4. Build array of interest descriptions
-    const interestDescriptions = interestPosts
-      .map(p => p.description || '')
-      .filter(d => d.trim().length > 0);
-
-    // 5. Fetch all candidate posts (excluding user's own)
-    const candidates = await postModel.find({ userId: { $ne: userId } });
-
-    // 6. Score each candidate by max similarity to any interest description
-    const scored = candidates.map(p => {
-      const desc = p.description || '';
-      const score = interestDescriptions.reduce((max, seed) => {
-        const sim = stringSimilarity.compareTwoStrings(desc, seed);
-        return sim > max ? sim : max;
-      }, 0);
-      return { post: p, score };
-    });
-
-    // 7. Sort by score desc, then createdAt desc
-    scored.sort((a, b) => {
-      if (b.score === a.score) {
-        return b.post.createdAt - a.post.createdAt;
+      console.log(followingAgg)
+      // 4. If no signals → random fallback
+      if (followingAgg[0]?.followingPosts.length === 0) {
+        const randomPosts = await postModel.aggregate([
+          { $sample: { size: 20 } }
+        ]);
+        return res.status(200).json(randomPosts);
       }
-      return b.score - a.score;
-    });
-
-    // 8. Return top 20
-    const recommended = scored.slice(0, 20).map(item => item.post);
-    res.status(200).json(recommended);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-};
+  
+      // 5. Otherwise → default (chronological) feed
+      return res.status(200).json(defaultTimeline);
+  
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  };
+  
