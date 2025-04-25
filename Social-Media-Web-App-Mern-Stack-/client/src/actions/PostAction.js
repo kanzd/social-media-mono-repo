@@ -1,11 +1,11 @@
 import * as PostApi from '../api/PostRequest';
 
-export const getTimelinePosts = (id) => async (dispatch) => {
+export const getTimelinePosts = (id,page) => async (dispatch) => {
 
     dispatch({ type: "RETRIEVING_START" });
 
     try {
-        const { data } = await PostApi.getTimelinePosts(id);
+        const { data } = await PostApi.getTimelinePosts(id,page);
         dispatch({ type: "RETRIEVING_SUCCESS", data: data });
     } catch (error) {
         console.log(error);
