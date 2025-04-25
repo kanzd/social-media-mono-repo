@@ -80,6 +80,9 @@ export const like_dislike_Post = async (req, res) => {
 // Get personalized timeline (with random fallback)
 export const timeline = async (req, res) => {
     const userId = req.params.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const startIndex = (page - 1) * limit;
   
     try {
       // 1. Your own posts
@@ -101,23 +104,32 @@ export const timeline = async (req, res) => {
   
       const followingPosts = followingAgg[0]?.followingPosts || [];
   
-      // 3. Signal posts: those you’ve liked or commented on
+      // 3. Posts you've interacted with
       const liked = await postModel.find({ likes: userId });
       const commented = await postModel.find({ 'comments.userId': userId });
       const interestPosts = [...liked, ...commented];
   
-      // 4. If no following posts → random fallback
-      let combinedPosts = ownPosts.concat(followingPosts);
-      
-      // If no following posts exist, add random posts to the timeline
+      // 4. Combine posts
+      let combinedPosts = [...ownPosts, ...followingPosts, ...interestPosts];
+  
+      // Add random fallback if not enough posts
+      if (combinedPosts.length < limit) {
         const randomPosts = await postModel.aggregate([
           { $sample: { size: 20 } }
         ]);
         combinedPosts = combinedPosts.concat(randomPosts);
-      
-      // Shuffle the combined posts array to make the timeline random
-      const shuffledPosts = combinedPosts.sort(() => Math.random() - 0.5);
-      return res.status(200).json(shuffledPosts);
+      }
+  
+      // Remove duplicates by post ID
+      const uniquePostsMap = new Map();
+      combinedPosts.forEach(post => uniquePostsMap.set(post._id.toString(), post));
+      const uniquePosts = Array.from(uniquePostsMap.values());
+  
+      // Shuffle & paginate
+      const shuffledPosts = uniquePosts.sort(() => Math.random() - 0.5);
+      const paginatedPosts = shuffledPosts.slice(startIndex, startIndex + limit);
+  
+      res.status(200).json(paginatedPosts);
   
     } catch (error) {
       res.status(500).json(error);
