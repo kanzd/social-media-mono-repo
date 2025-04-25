@@ -11,10 +11,10 @@ const Posts = () => {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.authReducer.authData)
   let { posts, loading } = useSelector((state) => state.postReducer)
-
+  const [page,setPage] = React.useState(2)
   useEffect(() => {
-    dispatch(getTimelinePosts(user._id))
-  }, [])
+    dispatch(getTimelinePosts(user._id,page))
+  }, [page])
   console.log(posts)
 
   if (params.id) {
@@ -22,7 +22,7 @@ const Posts = () => {
   }
   return (
     <div className='Posts'>
-
+      }
       {loading ? "Fetching Posts..." :
         posts.map((post, id) => {
           return <Post onUpdate={()=>{
