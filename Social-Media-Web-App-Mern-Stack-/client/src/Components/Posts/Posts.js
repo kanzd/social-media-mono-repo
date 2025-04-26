@@ -22,7 +22,6 @@ const Posts = () => {
   }
   return (
     <div className='Posts'>
-      }
       {loading ? "Fetching Posts..." :
         posts.map((post, id) => {
           return <Post onUpdate={()=>{

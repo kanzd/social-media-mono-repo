@@ -26,7 +26,7 @@ export const registerUser = async (req, res) => {
 
         const user = await newUser.save();
 
-        const token = jwt.sign({ email: user.email, id: user._id }, 'my-default-dev-secret');
+        const token = jwt.sign({ user:{id: user._id} }, 'my-default-dev-secret');
 
         res.status(200).json({ user, token });
     } catch (error) {
@@ -49,7 +49,7 @@ export const loginUser = async (req, res) => {
             if (!validity) {
                 res.status(400).json("Soory, Please enter the correct email or password!");
             } else {
-                const token = jwt.sign({ email: user.email, id: user._id }, 'my-default-dev-secret');
+                const token = jwt.sign({ user:{id: user._id} }, 'my-default-dev-secret');
                 res.status(200).json({ user, token });
             }
         } else {
