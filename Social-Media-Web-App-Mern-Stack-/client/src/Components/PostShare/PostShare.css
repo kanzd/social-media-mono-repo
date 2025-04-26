@@ -1,7 +1,7 @@
 .PostShare{
     display: flex;
     gap: 1rem;
-    background-color: var(--cardColor);
+    background-color:white;
     padding: 1rem;
     border-radius: 1rem;
 }
@@ -20,12 +20,15 @@
 }
 
 .PostShare > div > input {
-    background-color: var(--inputColor);
+    background-color: rgb(255 255 255 / 0%);
     border-radius: 10px;
     padding: 10px;
     font-size: 17px;
-    border: none;
+    border: 2px #444444 solid;
     outline: none;
+}
+.PostShare > div > input::placeholder {
+    color:lightgray
 }
 
 .postOptions{
@@ -42,6 +45,11 @@
     align-items: center;
     justify-content: center;
     font-size: 14px;
+    color:white;
+    height:50px;
+    width: 120px;
+    font-weight: bold;
+    background-color: #fa3c6a;
 }
 
 .option:hover{

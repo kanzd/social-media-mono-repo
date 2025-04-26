@@ -89,8 +89,9 @@ const ChatAreaTop = () => {
   }, [receiver?._id]);
   return (
     <>
-      <Flex w={"100%"}>
+      <Flex w={"100%"} style={{backgroundColor:'#f5f5dc'}}>
         <Button
+        style={{backgroundColor:'#f5f5dc'}}
           borderRadius={0}
           height={"inherit"}
           onClick={() => handleBack()}
@@ -99,6 +100,7 @@ const ChatAreaTop = () => {
         </Button>
         <Tooltip label="View Profile">
           <Button
+          style={{backgroundColor:'#f5f5dc'}}
             w={"100%"}
             mr={0}
             p={2}

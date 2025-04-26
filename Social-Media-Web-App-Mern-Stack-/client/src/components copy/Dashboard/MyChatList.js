@@ -23,7 +23,6 @@ import { useDisclosure } from "@chakra-ui/react";
 import NewMessage from "../miscellaneous/NewMessage";
 import wavFile from "../../assets/newmessage.wav";
 import { ProfileModal } from "../miscellaneous/ProfileModal";
-
 const scrollbarconfig = {
   "&::-webkit-scrollbar": {
     width: "5px",
@@ -44,6 +43,7 @@ const scrollbarconfig = {
 const MyChatList = (props) => {
   var sound = new Audio(wavFile);
   const toast = useToast();
+  
   const context = useContext(chatContext);
   const {
     hostName,
@@ -212,7 +212,7 @@ const MyChatList = (props) => {
         h={"100%"}
       >
         <Flex zIndex={1} justify={"space-between"}>
-          <Text mb={"10px"} fontWeight={"bold"} fontSize={"2xl"}>
+          <Text style={{color:'white'}} mb={"10px"} fontWeight={"bold"} fontSize={"2xl"}>
             Chats
           </Text>
 
@@ -244,7 +244,8 @@ const MyChatList = (props) => {
 
         <Button
           m={2}
-          colorScheme="purple"
+          style={{backgroundColor:'#ff3366'}}
+          colorScheme="red"
           onClick={() => props.setactiveTab(1)}
         >
           Add new Chat <AddIcon ml={2} fontSize={"12px"} />
@@ -261,6 +262,7 @@ const MyChatList = (props) => {
               overflow={"hidden"}
             >
               <Button
+              style={{backgroundColor:'#454444',color:'white'}}
                 h={"4em"}
                 w={"100%"}
                 justifyContent={"space-between"}
@@ -305,7 +307,7 @@ const MyChatList = (props) => {
                   </Box>
                 </Flex>
 
-                <Stack direction={"row"} align={"center"}>
+                <Stack style={{color:'lightgrey'}} direction={"row"} align={"center"}>
                   <Box textAlign={"right"} fontSize={"x-small"}>
                     {new Date(chat.updatedAt).toDateString() ===
                     new Date().toDateString() ? (

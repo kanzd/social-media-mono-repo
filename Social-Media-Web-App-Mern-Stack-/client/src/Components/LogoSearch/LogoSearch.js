@@ -13,7 +13,7 @@ const LogoSearch = () => {
         <input type="text" placeholder='#Search' />
 
         <div className="s-icon">
-          <SearchIcon />
+          <SearchIcon color='transparent' />
         </div>
       </div>
 

@@ -449,8 +449,8 @@ export const ChatArea = () => {
             <Text fontSize="6vw" fontWeight="bold" fontFamily="Work sans">
             <img src={Logo}></img>
             </Text>
-            <Text fontSize="2vw">Online chatting app</Text>
-            <Text fontSize="md">Select a chat to start messaging</Text>
+            <Text style={{color:'white'}} fontSize="2vw">Online chatting app</Text>
+            <Text style={{color:'white'}} fontSize="md">Select a chat to start messaging</Text>
           </Box>
         )
       )}

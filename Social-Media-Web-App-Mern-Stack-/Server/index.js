@@ -24,7 +24,7 @@ app.use(cors());
 dotenv.config();
 
 
-const connection = 'mongodb+srv://algotarian:8r4pk8qW9LjE3fw7@cluster0.xskpfew.mongodb.net/'
+const connection = 'mongodb+srv://algotarian:8r4pk8qW9LjE3fw7@cluster0.wnqvfdq.mongodb.net/'
 mongoose.connect
     (connection, { useNewUrlParser: true, useUnifiedTopology: true,dbName: "hik8", }
     ).then(() =>

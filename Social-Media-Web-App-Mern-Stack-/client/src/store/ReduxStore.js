@@ -33,6 +33,11 @@ const persistedState = loadFromLocalStorage();
 
 const store = createStore(reducers, persistedState, composeEnhancers(applyMiddleware(thunk)));
 
-store.subscribe(() => saveToLocalStorage(store.getState()));
+store.subscribe(() => {
+    if(localStorage.getItem('profile')){
+        saveToLocalStorage(store.getState())
+    }
+    
+});
 
 export default store;
