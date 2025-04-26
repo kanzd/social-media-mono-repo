@@ -164,7 +164,7 @@ const NewChats = (props) => {
                   <Flex>
                     <Box>
                       <img
-                        src={user.profilePic}
+                        src={user.profilePicture}
                         alt="profile"
                         style={{
                           width: "40px",

@@ -89,7 +89,15 @@ const ChatState = (props) => {
     fetchUser();
     fetchData();
   }, []);
-
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+    setIsAuthenticated(true)
+    fetchData()
+    }
+    else{
+      setIsAuthenticated(false)
+    }
+  },[localStorage.getItem("token")])
   return (
     <chatContext.Provider
       value={{

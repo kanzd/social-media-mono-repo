@@ -61,7 +61,7 @@ export const updateUser = async (req, res) => {
         }
 
         try {
-            if (req.files.profilePicture[0]){
+            if (req.files.profilePicture && req.files.profilePicture[0]){
                 const { data,error } = await supabase.storage.from('hik8').upload(new Date().getTime().toString(), req.files.profilePicture[0].buffer,{
                     contentType: req.files.profilePicture[0].mimetype, // <- This is the MIME type
                   })
@@ -73,7 +73,7 @@ export const updateUser = async (req, res) => {
         
                 
             }
-            if (req.files.coverPicture[0]){
+            if (req.files.coverPicture && req.files.coverPicture[0]){
                 const { data,error } = await supabase.storage.from('hik8').upload(new Date().getTime().toString(), req.files.coverPicture[0].buffer,{
                     contentType: req.files.coverPicture[0].mimetype, // <- This is the MIME type
                   })

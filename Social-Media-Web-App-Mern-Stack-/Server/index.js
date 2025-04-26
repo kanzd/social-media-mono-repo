@@ -22,7 +22,9 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 dotenv.config();
-const connection = 'mongodb+srv://algotarian:u1odJXeXlLeIoPGZ@cluster0.lbsla9f.mongodb.net/'
+
+
+const connection = 'mongodb+srv://algotarian:8r4pk8qW9LjE3fw7@cluster0.xskpfew.mongodb.net/'
 mongoose.connect
     (connection, { useNewUrlParser: true, useUnifiedTopology: true,dbName: "hik8", }
     ).then(() =>

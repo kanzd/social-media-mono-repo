@@ -24,7 +24,7 @@ const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [index, setindex] = useState();
   const navigator = useNavigate();
-
+  console.log(isAuthenticated)
   useEffect(() => {
     if (isAuthenticated) {
       navigator("/chat/dashboard");

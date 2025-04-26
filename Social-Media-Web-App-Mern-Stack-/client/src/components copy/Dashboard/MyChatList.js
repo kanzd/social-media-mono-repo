@@ -271,7 +271,7 @@ const MyChatList = (props) => {
                   <Box>
                     <img
                       src={
-                        chat.members[0].profilePic ||
+                        chat.members[0].profilePicture ||
                         "https://via.placeholder.com/150"
                       }
                       alt="profile"
