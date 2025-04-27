@@ -127,7 +127,11 @@ const ChatAreaTop = () => {
                   <Image
                     borderRadius="full"
                     boxSize="40px"
+<<<<<<< HEAD
                     src={receiver?.profilePicture}
+=======
+                    src={receiver.profilePicture}
+>>>>>>> d508df6a174c08ff44777b8f2fc1cf2110949b8c
                     alt=""
                   />
 
