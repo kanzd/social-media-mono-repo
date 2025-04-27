@@ -106,14 +106,14 @@ const PostShare = () => {
 
                 <div className="postOptions">
 
-                    <div className="option" style={{ color: "var(--photo)" }}
+                    <div className="option" 
                         onClick={() => imageRef.current.click()}
                     >
                         <PhotoOutlinedIcon />
                         Photo
                     </div>
 
-                    <div className="option" onClick={() => videoRef.current.click()} style={{ color: "var(--video)" }}>
+                    <div className="option" onClick={() => videoRef.current.click()} >
                         <PlayCircleOutlineIcon />
                         Video
                     </div>
@@ -126,7 +126,7 @@ const PostShare = () => {
                         Shedule
                     </div> */}
 
-                    <button className='button ps-button' onClick={handleSubmit} disabled={loading}>
+                    <button style={{height: '50px',width:'120px'}} className='button ps-button' onClick={handleSubmit} disabled={loading}>
                         {loading ? "uploading..." : "Share"}
                     </button>
 

@@ -244,7 +244,7 @@ const MyChatList = (props) => {
 
         <Button
           m={2}
-          colorScheme="purple"
+          bg="gray.500"  
           onClick={() => props.setactiveTab(1)}
         >
           Add new Chat <AddIcon ml={2} fontSize={"12px"} />

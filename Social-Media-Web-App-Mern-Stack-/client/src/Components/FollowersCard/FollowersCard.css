@@ -7,12 +7,16 @@
     font-size: 15px;
     overflow: scroll;
     height: 300px;
+    font-size: large;
+    color:white;
 }
 
 .follower{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: medium;
+    color:lightgray;
 }
 
 .follower > div{

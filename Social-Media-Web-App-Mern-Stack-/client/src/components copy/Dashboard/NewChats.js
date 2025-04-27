@@ -148,9 +148,9 @@ const NewChats = (props) => {
           },
         }}
       >
-        <Button my={2} mx={2} colorScheme="purple">
+        {/* <Button my={2} mx={2} colorScheme="purple">
           Create New Group <AddIcon ml={2} fontSize={"12px"} />
-        </Button>
+        </Button> */}
         {users.map(
           (user) =>
             user._id !== context.user._id && (

@@ -26,7 +26,8 @@ const DeleteMessageModal = (props) => {
             </Button>
             <Button
               onClick={() => props.handleDeleteMessage(1)}
-              colorScheme={"purple"}
+              // colorScheme={"purple"}
+              style={{backgroundColor:'#fa3c6a !important;'}}
               m={1}
             >
               Delete from Me

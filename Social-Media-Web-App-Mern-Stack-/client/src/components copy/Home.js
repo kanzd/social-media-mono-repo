@@ -50,13 +50,13 @@ const Home = () => {
             {/* Hik 8 */}
             <img src={Logo}></img>
           </Text>
-          <Text fontSize="xl" fontWeight="bold" mb={4}>
+          <Text color='white' fontSize="xl" fontWeight="bold" mb={4}>
             Online Chatting App
           </Text>
-          <Button mr={3} onClick={handleloginopen}>
+          <Button  mr={3} onClick={handleloginopen}>
             Login
           </Button>
-          <Button colorScheme="purple" onClick={handlesignupopen}>
+          <Button style={{backgroundColor:'#fa3c6a',color:'white'}} colorScheme="purple" onClick={handlesignupopen}>
             Sign Up
           </Button>
         </Box>
@@ -66,13 +66,14 @@ const Home = () => {
         fontSize="sm"
         position={"fixed"}
         bottom={2}
+        // style={{backgroundColor:'#f5f5dc'}}
         left={"calc(50% - 155px)"}
         mt={4}
         textAlign="center"
       >
         &copy; 2024 Conversa. All rights reserved.
         <Link to="" target="_blank">
-          <Text as="u" color="purple.500" ml={1}>
+          <Text as="u" ml={1}>
             Hik 8
           </Text>
         </Link>
