@@ -4,8 +4,10 @@
     flex-direction: column;
     position: relative;
     gap: 1rem;
-    background: var(--cardColor);
+    /* background: var(--cardColor); */
     overflow-x: clip;   
+    color:lightgray;
+    background-color: #2a2a2a;
 }
 
 .ProfileImages {
@@ -19,7 +21,9 @@
 .ProfileImages>img:nth-of-type(1) {
     width: 100%;
 }
-
+.linkClass{
+    color: #fa3c6a !important;
+}
 .ProfileImages>img:nth-of-type(2) {
     width: 6rem;
     border-radius: 50%;
@@ -69,14 +73,17 @@
     justify-content: center;
     gap: 0.4rem;
 }
-
+.follow-post{
+    color: lightgray !important;
+}
 .follow > :nth-of-type(1) {
     font-weight: bold;
 }
 
 .follow > :nth-of-type(2) {
-    color: black;
+    color: white;
     font-size: 15px;
+
 }
 
 .vl { 

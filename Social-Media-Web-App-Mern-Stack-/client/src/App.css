@@ -21,7 +21,8 @@
 .App {
   overflow: hidden;
   color: var(--black);
-  background: #f3f3f3;
+  /* background: #f3f3f3; */
+  background: #181818;
   padding: 1rem 1rem;
 }
 
@@ -36,10 +37,12 @@
 
 .button{
   display: flex;
+  font-weight: 600;
   align-items: center;
   justify-content: center;
+  background-color: #fa3c6a !important;
   color: white;
-  background: var(--buttonBg);
+  /* background: var(--buttonBg); */
   border: none;
   border-radius: 0.5rem;
   transition: all 100ms ease-out;
@@ -48,8 +51,9 @@
 .button:hover{
   cursor: pointer;
   background: transparent;
-  color: var(--purplePain);
-  border: 2px solid var(--purplePain);
+  color: var(#444444);
+  background-color: #fa3c6a40 !important;
+  border: 2px solid var(#444444);
 }
 
 

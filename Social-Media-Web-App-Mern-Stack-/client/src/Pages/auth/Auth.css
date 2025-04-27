@@ -25,11 +25,13 @@
 .Webname > h2  {
     font-family: sans-serif;
     font-weight: bolder;
-    color: rgb(43, 43, 163);
+    /* color: rgb(43, 43, 163); */
+    color:white;
 }
 .Webname > h5  {
     font-family: sans-serif;
     font-weight: bolder;
+    color:lightgray;
 }
 
 .infoForm {
@@ -40,9 +42,14 @@
     gap: 2rem;
     font-weight: bolder;
     font-family: sans-serif;
+    background-color:#2a2a2a !important;
+    color:lightgray;
+    
 }
 .infoFields{
     margin: 4px 0px;
+    
+
 }
 .infoInput{
     border: none;
@@ -51,6 +58,7 @@
     border-radius: 8px;
     padding: 17px;
     flex: 1;
+    border: 2px #444444 solid;
 }
 
 .infoForm > div{

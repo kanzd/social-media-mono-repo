@@ -89,8 +89,9 @@ const ChatAreaTop = () => {
   }, [receiver?._id]);
   return (
     <>
-      <Flex w={"100%"}>
+      <Flex w={"100%"} style={{backgroundColor:'#f5f5dc'}}>
         <Button
+        style={{backgroundColor:'#f5f5dc'}}
           borderRadius={0}
           height={"inherit"}
           onClick={() => handleBack()}
@@ -99,6 +100,7 @@ const ChatAreaTop = () => {
         </Button>
         <Tooltip label="View Profile">
           <Button
+          style={{backgroundColor:'#f5f5dc'}}
             w={"100%"}
             mr={0}
             p={2}
@@ -125,7 +127,11 @@ const ChatAreaTop = () => {
                   <Image
                     borderRadius="full"
                     boxSize="40px"
+<<<<<<< HEAD
+                    src={receiver?.profilePicture}
+=======
                     src={receiver.profilePicture}
+>>>>>>> d508df6a174c08ff44777b8f2fc1cf2110949b8c
                     alt=""
                   />
 
@@ -137,7 +143,7 @@ const ChatAreaTop = () => {
                     gap={0}
                     textAlign={"left"}
                   >
-                    <Text mx={1} my={receiver.isOnline ? 0 : 2} fontSize="2xl">
+                    <Text mx={1} my={receiver?.isOnline ? 0 : 2} fontSize="2xl">
                       {receiver.name}
                     </Text>
                     {receiver.isOnline ? (

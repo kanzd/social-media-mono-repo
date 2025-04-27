@@ -141,7 +141,7 @@ const Login = (props) => {
         justifyContent="center"
         alignItems="center"
       >
-        <Avatar bg="purple.300" />
+        <Avatar style={{background:'grey'}} />
         <Heading color="pruple.400">Welcome Back</Heading>
         <Card minW={{ base: "90%", md: "468px" }} borderRadius={15} shadow={0}>
           <CardBody p={0}>
@@ -167,7 +167,8 @@ const Login = (props) => {
                       id="login-email"
                       type="email"
                       placeholder="email address"
-                      focusBorderColor="purple.500"
+                      
+                      // 
                       onChange={(e) => setemail(e.target.value)}
                     />
                   </InputGroup>
@@ -197,7 +198,7 @@ const Login = (props) => {
                       <Input
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
-                        focusBorderColor="purple.500"
+                        
                         onChange={(e) => setpassword(e.target.value)}
                       />
                       <InputRightElement mx={1}>
@@ -228,7 +229,7 @@ const Login = (props) => {
                         id={"otp"}
                         type="number"
                         placeholder="enter otp"
-                        focusBorderColor="purple.500"
+                        
                       />
                     </InputGroup>
                   </FormControl>
@@ -237,6 +238,7 @@ const Login = (props) => {
                   borderRadius={10}
                   type="submit"
                   variant="solid"
+                  style={{backgroundColor:'#fa3c6a'}}
                   colorScheme="purple"
                   width="full"
                   onClick={handleLogin}
@@ -250,7 +252,7 @@ const Login = (props) => {
       </Stack>
       <Box>
         New to us?{" "}
-        <Link color="purple.500" onClick={() => handletabs(1)}>
+        <Link style={{color:'#fa3c6a'}}  onClick={() => handletabs(1)}>
           Sign Up
         </Link>
       </Box>

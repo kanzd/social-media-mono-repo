@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Home from '../../Img/home.png';
+import Home from '../../Img/home.svg';
 import './Comment.css';
 import Like from '../../Img/like.png';
 import Notlike from '../../Img/notlike.png';

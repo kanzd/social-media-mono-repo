@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './RightSide.css';
-import Home from '../../Img/home.png';
+import Home from '../../Img/home.svg';
 // import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 // import Noti from '../../Img/noti.png';
 // import Chat from '../../Img/Chat.svg';
@@ -24,7 +24,8 @@ const RightSide = () => {
 
                 {/* <SettingsOutlinedIcon /> */}
                 <Link to='../chat/home'>
-            <Lottie options={{
+            <Lottie  options={{
+        
       loop: true,
       autoplay: true, 
       animationData: animationData,

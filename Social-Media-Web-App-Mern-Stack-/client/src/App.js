@@ -10,6 +10,7 @@ import Dashboard from "./components copy/Dashboard/Dashboard";
 import ChatState from "./context/appState";
 import { ChakraProvider } from "@chakra-ui/react";
 import ChatApp from './ChatApp'
+import Navbar from './components copy/Navbar/Navbar'; // Adjust the path if necessary
 
 const token = localStorage.getItem("token");
 function App() {
@@ -32,13 +33,16 @@ function App() {
         <Route path='/profile/:id' element={user ? <Profile /> : <Navigate to='../auth' />} />
         <Route path='/chat' element={user ?(
         <>
+        
           <ChatApp token={token} />
           {/* <Outlet /> */}
           </>
  
    ) : <Navigate to='../auth' />} />
-        <Route path='/chat/home' element={user ?<ChatHome /> : <Navigate to='../auth' />} />
-        <Route path='/chat/dashboard' element={user ? <Dashboard /> : <Navigate to='../auth' />} />
+        <Route path='/chat/home' element={user ?<>
+        <Navbar />
+        <ChatHome /></> : <Navigate to='../auth' />} />
+        <Route path='/chat/dashboard' element={user ? <> <Navbar /><Dashboard /></> : <Navigate to='../auth' />} />
         
       </Routes>
      

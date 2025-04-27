@@ -42,7 +42,7 @@ const SingleMessage = ({
       toast({
         duration: 1000,
         render: () => (
-          <Box color="white" p={3} bg="purple.300" borderRadius="lg">
+          <Box color="white" p={3} style={{backgroundColor:'#fa3c6a',color:'white'}} bg="purple.300" borderRadius="lg">
             Message copied to clipboard!!
           </Box>
         ),
@@ -82,6 +82,7 @@ const SingleMessage = ({
             <Tooltip label="Copy" placement="top">
               <Button
                 size="sm"
+                style={{color:'#fa3c6a'}}
                 variant="ghost"
                 mr={2}
                 onClick={handleCopy}
@@ -95,6 +96,7 @@ const SingleMessage = ({
               <Button
                 size="sm"
                 variant="ghost"
+                style={{color:'#fa3c6a'}}
                 onClick={(e) => {
                   e.preventDefault();
                   onOpenDeleteModal();
@@ -107,10 +109,10 @@ const SingleMessage = ({
           </Box>
         )}
         <Flex w="max-content" position="relative">
-          {!isSender && receiver?.profilePic && (
+          {!isSender && receiver?.profilePicture && (
             <Image
               borderRadius="50%"
-              src={receiver.profilePic}
+              src={receiver.profilePicture}
               alt="Sender"
               w="20px"
               h="20px"
@@ -122,15 +124,16 @@ const SingleMessage = ({
           <Stack spacing={0} position="relative">
             {message.replyto && (
               <Box
+              
                 my={1}
                 p={2}
                 borderRadius={10}
-                bg={isSender ? "purple.200" : "blue.200"}
+                // bg={isSender ? "purple.200" : "blue.200"}
                 mx={2}
                 color="white"
                 w="max-content"
                 maxW="60vw"
-                alignSelf={isSender ? "flex-end" : "flex-start"}
+                // alignSelf={isSender ? "flex-end" : "flex-start"}
               >
                 reply to
               </Box>
@@ -138,11 +141,12 @@ const SingleMessage = ({
 
             <Box
               alignSelf={isSender ? "flex-end" : "flex-start"}
+              style={{backgroundColor:isSender?'#f5f0e6':'#2b2b2b',color:'#aaaaaa'}}
               position="relative"
               my={1}
               p={2}
               borderRadius={10}
-              bg={isSender ? "purple.300" : "blue.300"}
+              // bg={isSender ? "purple.300" : "blue.300"}
               color="white"
               w="max-content"
               maxW="60vw"
@@ -163,7 +167,7 @@ const SingleMessage = ({
                 dangerouslySetInnerHTML={markdownToHtml(message.text)}
               ></Text>
               <Flex justify="end" align="center" mt={1}>
-                <Text align="end" fontSize="10px" color="#e6e5e5">
+                <Text align="end" fontSize="10px" color="#aaaaaa">
                   {messageTime}
                 </Text>
 
@@ -181,7 +185,8 @@ const SingleMessage = ({
                 <Box
                   fontSize="xs"
                   position="absolute"
-                  bg={isSender ? "purple.300" : "blue.300"}
+                  style={{color:'#fa3c6a'}}
+                  // bg={isSender ? "purple.300" : "blue.300"}
                   bottom={-1}
                   left={-1}
                   borderRadius="lg"
@@ -196,6 +201,7 @@ const SingleMessage = ({
                   <Tooltip label="Copy" placement="top">
                     <Button
                       size="sm"
+                      style={{color:'#fa3c6a'}}
                       variant="ghost"
                       mr={2}
                       onClick={handleCopy}
