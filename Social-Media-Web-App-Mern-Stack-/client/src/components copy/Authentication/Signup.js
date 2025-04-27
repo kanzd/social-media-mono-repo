@@ -123,7 +123,7 @@ const Signup = (props) => {
         justifyContent="center"
         alignItems="center"
       >
-        <Avatar bg="purple.300" />
+        <Avatar style={{background:'grey'}}  />
         <Heading color="pruple.400">Welcome</Heading>
         <Card minW={{ base: "90%", md: "468px" }} borderRadius={15} shadow={0}>
           <CardBody p={0}>
@@ -138,7 +138,7 @@ const Signup = (props) => {
                     <Input
                       type="text"
                       placeholder="Enter your name"
-                      focusBorderColor="purple.500"
+                      
                       onChange={(e) => setname(e.target.value)}
                       required
                     />
@@ -154,7 +154,7 @@ const Signup = (props) => {
                     <Input
                       type="email"
                       placeholder="Email address"
-                      focusBorderColor="purple.500"
+                      
                       onChange={(e) => setemail(e.target.value)}
                     />
                   </InputGroup>
@@ -174,7 +174,7 @@ const Signup = (props) => {
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
-                      focusBorderColor="purple.500"
+                      
                       onChange={(e) => setpassword(e.target.value)}
                     />
                     <InputRightElement mx={1}>
@@ -203,7 +203,7 @@ const Signup = (props) => {
                       textOverflow={"ellipsis"}
                       type={showPassword ? "text" : "password"}
                       placeholder="Confirm Password"
-                      focusBorderColor="purple.500"
+                      
                       onChange={(e) => setconfirmpassword(e.target.value)}
                     />
                     <InputRightElement mx={1}>
@@ -222,6 +222,7 @@ const Signup = (props) => {
                   type="submit"
                   variant="solid"
                   colorScheme="purple"
+                  style={{backgroundColor:'#fa3c6a'}}
                   width="full"
                   onClick={handleSignup}
                 >
@@ -234,7 +235,7 @@ const Signup = (props) => {
       </Stack>
       <Box>
         Already have account?{" "}
-        <Link color="purple.500" onClick={() => handletabs(0)}>
+        <Link style={{color:'#fa3c6a'}} color="purple.500" onClick={() => handletabs(0)}>
           login
         </Link>
       </Box>

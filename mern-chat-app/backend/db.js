@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./.env" });
 
 
-const connection = 'mongodb+srv://algotarian:8r4pk8qW9LjE3fw7@cluster0.wnqvfdq.mongodb.net/'
+const connection = 'mongodb+srv://algotarian:8r4pk8qW9LjE3fw7@cluster0.5wzvoid.mongodb.net/'
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(connection, {

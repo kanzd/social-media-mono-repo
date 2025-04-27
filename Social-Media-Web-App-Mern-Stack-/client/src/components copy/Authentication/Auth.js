@@ -11,10 +11,10 @@ const Auth = (props) => {
   };
 
   return (
-    <Tabs isFitted variant="enclosed" index={activetab} colorScheme="purple">
+    <Tabs isFitted variant="enclosed" index={activetab} style={{color:'grey'}} >
       <TabList mb="2em">
-        <Tab onClick={() => handleTabsChange(0)}>Login</Tab>
-        <Tab onClick={() => handleTabsChange(1)}>Sign Up</Tab>
+        <Tab style={{color:'grey'}} onClick={() => handleTabsChange(0)}>Login</Tab>
+        <Tab style={{color:'grey'}} onClick={() => handleTabsChange(1)}>Sign Up</Tab>
       </TabList>
       <TabPanels>
         <TabPanel p={0}>

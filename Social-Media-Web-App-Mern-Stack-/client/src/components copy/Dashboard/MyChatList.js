@@ -201,7 +201,6 @@ const MyChatList = (props) => {
       console.log(error);
     }
   };
-
   return !isLoading ? (
     <>
       <Box

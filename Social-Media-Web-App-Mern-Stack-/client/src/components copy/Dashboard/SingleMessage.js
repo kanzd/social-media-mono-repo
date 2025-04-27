@@ -42,7 +42,7 @@ const SingleMessage = ({
       toast({
         duration: 1000,
         render: () => (
-          <Box color="white" p={3} bg="purple.300" borderRadius="lg">
+          <Box color="white" p={3} style={{backgroundColor:'#fa3c6a',color:'white'}} bg="purple.300" borderRadius="lg">
             Message copied to clipboard!!
           </Box>
         ),

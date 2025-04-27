@@ -14,17 +14,31 @@ const Posts = () => {
   const [page,setPage] = React.useState(0)
   const [refresh,setRefresh] = React.useState(false)
   useEffect(()=>{
+    if(refresh){
     dispatch({type:'RESET_POST'})
+   
+    }
+    return ()=>{
+      dispatch({type:'RESET_POST'})
+    }
   },[])
   useEffect(() => {
-    dispatch(getTimelinePosts(user._id,page,refresh))
-    // setPage(page+1)
-    setRefresh(false)
-  }, [refresh])
-  const fetchData = ()=>{
-    dispatch(getTimelinePosts(user._id,page+1))
+    dispatch(getTimelinePosts(user._id,0,refresh))
+    setPage(0)
     console.log(page)
-    setPage(page+1)
+    // setRefresh(false)
+    return ()=>{
+      dispatch({type:'RESET_POST'})
+    }
+  }, [])
+  // useEffect(() => {
+  //   if(refresh){
+  //   dispatch(getTimelinePosts(user._id,page,refresh))
+  //   setRefresh(false)
+  //   }
+  // }, [refresh])
+  const fetchData = (page)=>{
+    dispatch(getTimelinePosts(user._id,page))
   }
   if (params.id) {
     posts = posts.filter((post) => post.userId === params.id)
@@ -33,7 +47,10 @@ const Posts = () => {
     <div className='Posts'>
       <InfiniteScroll
   dataLength={posts.length} //This is important field to render the next data
-  next={fetchData}
+  next={()=>{fetchData(page)
+    console.log(page)
+    setPage(page+1)
+  }}
   
   hasMore={currentPost.length>0}
   // endMessage={

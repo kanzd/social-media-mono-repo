@@ -37,7 +37,7 @@ const Navbar = (props) => {
             base: "flex",
           }}
         >
-          <Button
+          {/* <Button
             p={3}
             borderRadius={"full"}
             borderWidth={1}
@@ -47,18 +47,17 @@ const Navbar = (props) => {
             mx={1}
           >
             {icon}
-          </Button>
-          <Link
+          </Button> */}
+          {/* <Link
             p={3}
             borderRadius={"full"}
             borderWidth={1}
             fontSize={"small"}
             backgroundColor={"transparent"}
-            href="https://github.com/pankil-soni"
             mx={1}
           >
             <FaGithub />
-          </Link>
+          </Link> */}
         </Box>
       )}
       <Box
@@ -73,14 +72,14 @@ const Navbar = (props) => {
         }}
       >
         <Flex justify={"space-between"}>
-          <Text fontSize="2xl">Conversa</Text>
+          <Text style={{color:'white'}} fontSize="2xl">Conversa</Text>
 
           <Box
             display={{ base: "none", md: "block" }}
             justifyContent="space-between"
             alignItems="center"
           >
-            <Button
+            {/* <Button
               onClick={handleToggle}
               mr={2}
               borderRadius={"full"}
@@ -103,7 +102,7 @@ const Navbar = (props) => {
               }}
             >
               <FaGithub />
-            </Button>
+            </Button> */}
             {isAuthenticated && (
               <ProfileMenu isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
             )}

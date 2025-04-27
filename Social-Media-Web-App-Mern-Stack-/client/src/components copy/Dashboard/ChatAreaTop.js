@@ -127,7 +127,7 @@ const ChatAreaTop = () => {
                   <Image
                     borderRadius="full"
                     boxSize="40px"
-                    src={receiver.profilePicture}
+                    src={receiver?.profilePicture}
                     alt=""
                   />
 
@@ -139,7 +139,7 @@ const ChatAreaTop = () => {
                     gap={0}
                     textAlign={"left"}
                   >
-                    <Text mx={1} my={receiver.isOnline ? 0 : 2} fontSize="2xl">
+                    <Text mx={1} my={receiver?.isOnline ? 0 : 2} fontSize="2xl">
                       {receiver.name}
                     </Text>
                     {receiver.isOnline ? (
