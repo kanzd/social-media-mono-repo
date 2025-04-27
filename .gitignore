@@ -6,3 +6,4 @@ package-lock.json
 
 **/build/
 **/public/images
+**/.DS_Store
