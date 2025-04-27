@@ -21,7 +21,7 @@ const PostShare = () => {
     const dispatch = useDispatch();
     const desc = useRef();
     const { user } = useSelector((state) => state.authReducer.authData);
-    const serverPublic = 'http://localhost:4000/images/';
+    const serverPublic = 'https://social-media-mono-repo.onrender.com/images/';
 
 
     const onImageChange = (event) => {

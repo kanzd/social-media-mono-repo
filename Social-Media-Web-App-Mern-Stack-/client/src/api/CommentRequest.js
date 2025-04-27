@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:4000' });
+const API = axios.create({ baseURL: 'https://social-media-mono-repo.onrender.com' });
 
 export const getPostComments = (id) => API.get(`/comment/${id}/post_comments`);
 export const likeComment = (id, likedBy ) => API.put(`/comment/${id}/like_dislike`, { likedBy: likedBy });

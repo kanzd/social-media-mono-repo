@@ -9,7 +9,7 @@ import {getUser} from "../../api/UserRequest";
 
 
 const Comment = ({ comment }) => {
-    const serverPublic = 'http://localhost:4000/images/';
+    const serverPublic = 'https://social-media-mono-repo.onrender.com/images/';
 
     const { user } = useSelector((state) => state.authReducer.authData)
     const [liked, setLiked] = useState(comment.likes.includes(user._id))

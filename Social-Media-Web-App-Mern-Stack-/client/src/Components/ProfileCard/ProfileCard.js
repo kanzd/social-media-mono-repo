@@ -8,7 +8,7 @@ const ProfileCard = ({ location }) => {
 
     const { user } = useSelector((state) => state.authReducer.authData);
     const posts = useSelector((state) => state.postReducer.posts)
-    const serverPublic = 'http://localhost:4000/images/';
+    const serverPublic = 'https://social-media-mono-repo.onrender.com/images/';
 
 
 

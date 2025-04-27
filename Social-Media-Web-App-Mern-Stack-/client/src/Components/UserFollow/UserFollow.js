@@ -10,7 +10,7 @@ const UserFollow = ({ person }) => {
     const { user } = useSelector((state) => state.authReducer.authData);
     const [following, setFollowing] = useState(person.followers.includes(user._id));
 
-    const serverPublic = 'http://localhost:4000/images/';
+    const serverPublic = 'https://social-media-mono-repo.onrender.com/images/';
 
 
     const handleFollow = () => {
