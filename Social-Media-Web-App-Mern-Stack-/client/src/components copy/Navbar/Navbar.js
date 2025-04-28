@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
 import { Box, Button, Flex, Text, Link, useDisclosure } from "@chakra-ui/react";
-import { FaGithub, FaMoon, FaSun } from "react-icons/fa";
+import { FaGithub, FaMoon, FaSun ,FaArrowLeft} from "react-icons/fa";
 import ProfileMenu from "./ProfileMenu";
 import chatContext from "../../context/chatContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
   const context = useContext(chatContext);
   const { isAuthenticated } = context;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigator = useNavigate();
   const colormode = localStorage.getItem("chakra-ui-color-mode");
   const [icon, seticon] = useState(
     colormode === "dark" ? <FaSun /> : <FaMoon />
@@ -23,6 +25,9 @@ const Navbar = (props) => {
       seticon(<FaSun />);
       props.toggleColorMode();
     }
+  };
+  const handleBack = () => {
+   navigator('/')
   };
 
   return (
@@ -72,7 +77,11 @@ const Navbar = (props) => {
         }}
       >
         <Flex justify={"space-between"}>
-          <Text style={{color:'white'}} fontSize="2xl">Conversa</Text>
+        <Flex direction={'row'}><Button onClick={handleBack} variant="link">
+        <FaArrowLeft /> 
+      </Button>
+      <Text style={{color:'white'}} fontSize="2xl">Hik 8</Text></Flex>
+        
 
           <Box
             display={{ base: "none", md: "block" }}

@@ -132,7 +132,7 @@ module.exports = (io, socket) => {
         .get(conversationId)
         .has(receiverSid);
     }
-
+    // console.log(imageUrl) 
     const message = await sendMessageHandler({
       text,
       imageUrl,

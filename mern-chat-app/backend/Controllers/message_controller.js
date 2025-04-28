@@ -269,6 +269,7 @@ const sendMessageHandler = async (data) => {
       conversationId,
       senderId,
       text,
+      imageUrl,
       seenBy: [
         {
           user: receiverId,
