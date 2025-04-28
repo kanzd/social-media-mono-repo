@@ -80,9 +80,9 @@ const ProfileMenu = (props) => {
                   ? "Dark Mode"
                   : "Light Mode"}
               </MenuItem>
-              <MenuItem color={"red"} onClick={handleLogout}>
+              {/* <MenuItem color={"red"} onClick={handleLogout}>
                 Logout
-              </MenuItem>
+              </MenuItem> */}
             </MenuList>
           </>
         }

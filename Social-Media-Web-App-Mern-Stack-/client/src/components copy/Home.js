@@ -30,7 +30,13 @@ const Home = () => {
       navigator("/chat/dashboard");
     }
   });
-
+  useEffect(()=>{
+    if(localStorage.getItem('profile')){
+      let token = JSON.parse(localStorage.getItem('profile')).token
+      localStorage.setItem('token',token) 
+      navigator("/chat/dashboard");
+    }
+  },[])
   const handleloginopen = () => {
     setindex(0);
     onOpen();

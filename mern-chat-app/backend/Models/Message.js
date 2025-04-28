@@ -14,15 +14,11 @@ const MessageSchema = new mongoose.Schema(
     },
     text: {
       type: String,
-      required: function () {
-        return !this.imageUrl;
-      },
+      required: false,
     },
     imageUrl: {
       type: String,
-      required: function () {
-        return !this.text;
-      },
+      required: false,
     },
     reaction: {
       type: String,

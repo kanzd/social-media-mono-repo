@@ -6,6 +6,7 @@ const ConversationSchema = new mongoose.Schema(
     latestmessage: {
       type: String,
       default: "",
+      required:false
     },
     isGroup: {
       type: Boolean,

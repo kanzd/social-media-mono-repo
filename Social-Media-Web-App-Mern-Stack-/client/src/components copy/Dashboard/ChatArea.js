@@ -265,12 +265,11 @@ export const ChatArea = () => {
       //   return;
       // }
     }
-
     const data = {
       text: messageText,
       conversationId: activeChatId,
       senderId: user._id,
-      imageUrl: file ? `${fileUrl}` : null,
+      imageUrl: fileUrl ? `${fileUrl}` : null,
     };
 
     socket.emit("send-message", data);
