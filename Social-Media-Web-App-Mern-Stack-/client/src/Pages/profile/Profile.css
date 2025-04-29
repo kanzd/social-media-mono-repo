@@ -15,7 +15,8 @@
 }
 @media screen and (max-width: 768px) {
     .Profile{
-        grid-template-columns: none;    
+        grid-template-columns: none;   
+        display: block; 
     }
    
     .navIconsProfile{
