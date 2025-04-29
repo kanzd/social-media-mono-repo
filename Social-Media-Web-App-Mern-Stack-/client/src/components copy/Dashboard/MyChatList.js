@@ -17,7 +17,9 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import chatContext from "../../context/chatContext";
 import { AddIcon, Search2Icon } from "@chakra-ui/icons";
+import { FaArrowLeft } from "react-icons/fa";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import ProfileMenu from "../Navbar/ProfileMenu";
 import { useDisclosure } from "@chakra-ui/react";
 import NewMessage from "../miscellaneous/NewMessage";
@@ -43,7 +45,7 @@ const scrollbarconfig = {
 const MyChatList = (props) => {
   var sound = new Audio(wavFile);
   const toast = useToast();
-  
+  const navigator = useNavigate();
   const context = useContext(chatContext);
   const {
     hostName,
@@ -125,7 +127,9 @@ const MyChatList = (props) => {
       socket.off("new-message-notification");
     };
   });
-
+  const handleBack = () => {
+    navigator('/')
+   };
   const [squery, setsquery] = useState("");
 
   const handleUserSearch = async (e) => {
@@ -211,6 +215,11 @@ const MyChatList = (props) => {
         h={"100%"}
       >
         <Flex zIndex={1} justify={"space-between"}>
+        <Box marginTop={'10px'} display={{ base: "block", md: "none" }}>
+        <Button onClick={handleBack} variant="link">
+        <FaArrowLeft /> 
+      </Button>
+      </Box>
           <Text style={{color:'white'}} mb={"10px"} fontWeight={"bold"} fontSize={"2xl"}>
             Chats
           </Text>
