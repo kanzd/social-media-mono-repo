@@ -33,6 +33,21 @@
     color: #555;
 }
 
+/* Ensure <p> inside a section-group is left aligned */
+.section-group p {
+    margin: 0;
+    text-align: left;
+}
+
+/* Add a tab-like indent to labels under section-group */
+.section-group label {
+    margin-left: 2rem;
+    text-align: left;
+    display: block;
+    font-size: 14px;
+    color: #333;
+}
+
 .settings-section ul {
     list-style: none;
     padding: 0;
@@ -42,29 +57,37 @@
     margin-bottom: 10px;
 }
 
-.settings-section label {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #333;
-}
-
-.settings-section input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.tab1 {
-    tab-size: 2;
-}
-
-.tab2 {
-    tab-size: 4;
-}
-
-.tab4 {
-    tab-size: 8;
-}
+/* Optional: if the .tab class is used for other spacing, you can keep this */
 .tab {
     display: inline-block;
-    margin-left: 40px;
+}
+
+/* Security buttons styling in Password & Account Security section */
+.security-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.security-buttons > button {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    border: 1px solid #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover state for outlined buttons */
+.btn-outline:hover {
+    background-color: #f0f0f0;
+}
+
+/* Delete Account button styling */
+.btn-delete {
+    border-color: red;
+    color: red;
+}
+
+.btn-delete:hover {
+    background-color: #ffe6e6;
 }

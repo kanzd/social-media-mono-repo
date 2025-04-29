@@ -8,6 +8,7 @@ import UserRoute from './Routes/UserRoute.js';
 import PostRoute from './Routes/PostRoute.js';
 import UploadRoute from './Routes/UploadRoute.js';
 import CommentRoute from "./Routes/CommentRoute.js";
+import UserSettingsRoute from './Routes/UserSettingsRoute.js';
 // Routes
 const app = express();
 
@@ -41,3 +42,4 @@ app.use('/user', UserRoute);
 app.use('/post', PostRoute);
 app.use('/upload', UploadRoute);
 app.use('/comment', CommentRoute);
+app.use('/settings', UserSettingsRoute);
