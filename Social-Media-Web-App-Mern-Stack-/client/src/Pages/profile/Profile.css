@@ -10,3 +10,27 @@
     flex-direction: column;
     gap: 1rem;
 }
+.navIconsProfile{
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .Profile{
+        grid-template-columns: none;    
+    }
+   
+    .navIconsProfile{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+    }
+  .navIconsProfile > img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.navIconsProfile > a > img {
+    width: 2rem;
+    height: 2rem;
+}
+    
+}

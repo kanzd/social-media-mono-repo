@@ -5,3 +5,12 @@
     height: 100vh;
     overflow: auto;
 }
+.ResponsiveView{
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .ResponsiveView{
+        display: block;
+    }
+    
+}
