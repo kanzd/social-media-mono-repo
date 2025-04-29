@@ -11,7 +11,16 @@ export const updateUser = (id, formData) => async (dispatch) => {
     }
 }
 
+export const deleteUser = (id) => async (dispatch) => {
+    dispatch({ type: "DELETING_START" })
 
+    try {
+        await UserApi.deleteUser(id);
+        dispatch({ type: "DELETING_SUCCESS", data: id })
+    } catch (error) {
+        dispatch({ type: "DELETING_FAIL" })
+    }
+}
 
 
 export const followUser = (id, data) => async (dispatch) => {

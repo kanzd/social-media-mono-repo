@@ -5,6 +5,7 @@ import Home from './Pages/home/Home';
 import Profile from './Pages/profile/Profile';
 import { Routes, Route, Navigate,Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import SettingsPage from './Pages/settings/SettingsPage';
 import ChatHome from "./components copy/Home";
 import Dashboard from "./components copy/Dashboard/Dashboard";
 import ChatState from "./context/appState";
@@ -31,6 +32,7 @@ function App() {
         <Route path='/home' element={user ? <Home /> : <Navigate to='../auth' />} />
         <Route path='/auth' element={user ? <Navigate to='../home' /> : <Auth />} />
         <Route path='/profile/:id' element={user ? <Profile /> : <Navigate to='../auth' />} />
+        <Route path='/settings' element={user ? <SettingsPage /> : <Navigate to='../auth' />} />
         <Route path='/chat' element={user ?(
         <>
         
