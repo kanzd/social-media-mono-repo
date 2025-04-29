@@ -14,7 +14,6 @@ const ProfileCard = ({ location }) => {
 
     return (
         <div className='ProfileCard'>
-
             <div className="ProfileImages">
                 <img src={user.coverPicture ?  user.coverPicture : serverPublic + "defaultCover.jpg"} alt="" />
                 <img src={user.profilePicture ?   user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />

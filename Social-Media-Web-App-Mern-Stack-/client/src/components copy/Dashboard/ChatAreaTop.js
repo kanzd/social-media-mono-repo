@@ -92,6 +92,7 @@ const ChatAreaTop = () => {
       <Flex w={"100%"} style={{backgroundColor:'#f5f5dc'}}>
         <Button
         style={{backgroundColor:'#f5f5dc'}}
+        w={"100%"}
           borderRadius={0}
           height={"inherit"}
           onClick={() => handleBack()}

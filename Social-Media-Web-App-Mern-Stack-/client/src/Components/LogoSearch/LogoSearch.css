@@ -29,3 +29,12 @@
 .s-icon:hover {
     cursor: pointer;
 }
+@media screen and (max-width: 500px) {
+    .LogoSearch {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 0rem;
+    }
+    
+}
