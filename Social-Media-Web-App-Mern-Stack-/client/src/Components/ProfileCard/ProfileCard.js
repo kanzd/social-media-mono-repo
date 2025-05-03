@@ -2,7 +2,7 @@ import React from 'react'
 import './ProfileCard.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { uniqBy } from 'lodash' 
 
 const ProfileCard = ({ location }) => {
 
@@ -41,7 +41,7 @@ const ProfileCard = ({ location }) => {
                         <>
                             <div className="vl"></div>
                             <div className="follow">
-                                <span>{posts.filter((post) => post.userId === user._id).length}</span>
+                                <span>{uniqBy(posts.filter((post) => post.userId === user._id),item=>item._id.toString()).length}</span>
                                 <span >Posts</span>
                             </div>
                         </>
