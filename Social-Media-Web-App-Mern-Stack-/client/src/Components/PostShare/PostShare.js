@@ -21,7 +21,7 @@ const PostShare = () => {
     const dispatch = useDispatch();
     const desc = useRef();
     const { user } = useSelector((state) => state.authReducer.authData);
-    const serverPublic = 'http://localhost:4000/images/';
+    const serverPublic = 'https://ybutcjrfzigxxjnxybta.supabase.co/storage/v1/object/public/hik8/';
 
 
     const onImageChange = (event) => {
@@ -99,7 +99,8 @@ const PostShare = () => {
 
     return (
         <div className="PostShare">
-            <img src={user.profilePicture ? serverPublic + user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />
+            
+            <img src={user.profilePicture ?user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />
 
             <div>
                 <input type="text" placeholder='Write a caption...' required ref={desc} />

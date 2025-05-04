@@ -26,7 +26,6 @@ const ProfileMenu = (props) => {
     setReceiver,
   } = context;
   const navigator = useNavigate();
-
   const handleLogout = async (e) => {
     e.preventDefault();
     setUser({});

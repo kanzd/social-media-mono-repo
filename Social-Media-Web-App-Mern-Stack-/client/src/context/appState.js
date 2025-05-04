@@ -1,5 +1,6 @@
 import chatContext from "./chatContext";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import io from "socket.io-client";
 // 192.168.0.104
 //http://192.168.0.104:5000
@@ -15,6 +16,7 @@ const ChatState = (props) => {
   const [user, setUser] = useState(localStorage.getItem("user") || {});
   const [receiver, setReceiver] = useState({});
   const [messageList, setMessageList] = useState([]);
+  const dispatch = useDispatch();
   const [activeChatId, setActiveChatId] = useState("");
   const [myChatList, setMyChatList] = useState([]);
   const [originalChatList, setOriginalChatList] = useState([]);
@@ -35,6 +37,7 @@ const ChatState = (props) => {
         throw new Error("Failed to fetch data" + (await response.text()));
       }
       const jsonData = await response.json();
+      
       setMyChatList(jsonData);
       setIsLoading(false);
       setOriginalChatList(jsonData);
@@ -61,6 +64,7 @@ const ChatState = (props) => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      // debugger;
       try {
         const token = localStorage.getItem("token");
         if (token) {
@@ -72,8 +76,9 @@ const ChatState = (props) => {
             },
           });
           const data = await res.json();
+          dispatch({type: 'UPDATE_USER_DETAILS',data:data})
           setUser(data);
-          console.log("user fetched");
+          // dispatch()
           setIsAuthenticated(true);
           socket.emit("setup", await data._id);
         }
@@ -88,16 +93,17 @@ const ChatState = (props) => {
 
     fetchUser();
     fetchData();
-  }, []);
+  }, [localStorage.getItem('token')]);
   useEffect(()=>{
     if(localStorage.getItem("token")){
     setIsAuthenticated(true)
-    fetchData()
+    console.log('fetch data')
+    // fetchData()
     }
     else{
       setIsAuthenticated(false)
     }
-  },[localStorage.getItem("token")])
+  },[localStorage.getItem('token')])
   return (
     <chatContext.Provider
       value={{
