@@ -100,7 +100,7 @@ export const like_dislike_Post = async (req, res) => {
 export const timeline = async (req, res) => {
     const userId = req.params.id;
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 5;
     const startIndex = (page - 1) * limit;
   
     try {

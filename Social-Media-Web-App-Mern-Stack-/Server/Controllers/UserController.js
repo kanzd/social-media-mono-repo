@@ -89,7 +89,7 @@ export const updateUser = async (req, res) => {
             const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
 
             const token = jwt.sign(
-                { email: user.email, id: user._id },
+                { user:{id: user._id} },
                 'my-default-dev-secret'
             );
 
@@ -130,7 +130,6 @@ export const deleteUser = async (req, res) => {
 
 export const followUser = async (req, res) => {
     const id = req.params.id;
-
     const { _id } = req.body;
 
     if (_id === id) {
@@ -151,6 +150,7 @@ export const followUser = async (req, res) => {
             }
 
         } catch (error) {
+            console.log(error)
             res.status(500).json(error)
         }
     }

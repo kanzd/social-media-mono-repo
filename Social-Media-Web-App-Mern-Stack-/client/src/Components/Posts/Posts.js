@@ -5,17 +5,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTimelinePosts } from '../../actions/PostAction';
 import { useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import uniqBy from 'lodash/uniqBy';
+import orderBy from 'lodash/orderBy';
 const Posts = () => {
 
   const params = useParams();
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.authReducer.authData)
   let { posts, loading,currentPost } = useSelector((state) => state.postReducer)
-  const [page,setPage] = React.useState(0)
+  const [page,setPage] = React.useState(1)
   const [refresh,setRefresh] = React.useState(false)
   useEffect(()=>{
     if(refresh){
     dispatch({type:'RESET_POST'})
+    // setRefresh(true)
    
     }
     return ()=>{
@@ -24,13 +27,11 @@ const Posts = () => {
   },[])
   useEffect(() => {
     dispatch(getTimelinePosts(user._id,0,refresh))
-    setPage(0)
-    console.log(page)
-    // setRefresh(false)
+    setRefresh(false)
     return ()=>{
       dispatch({type:'RESET_POST'})
     }
-  }, [])
+  }, [refresh])
   // useEffect(() => {
   //   if(refresh){
   //   dispatch(getTimelinePosts(user._id,page,refresh))
@@ -41,38 +42,35 @@ const Posts = () => {
     dispatch(getTimelinePosts(user._id,page))
   }
   if (params.id) {
-    posts = posts.filter((post) => post.userId === params.id)
+    posts = orderBy(uniqBy(posts.filter((post) => post.userId === params.id), item => item._id.toString()), item => new Date(item.createdAt), 'desc');
+  }else{
+    posts=orderBy(uniqBy(posts,item => item._id.toString()), item => new Date(item.createdAt), 'desc');
   }
+  console.log(posts)
   return (
-    <div className='Posts'>
+    <div id='postScroll' className='Posts'>
       <InfiniteScroll
+      scrollableTarget="postScroll"
   dataLength={posts.length} //This is important field to render the next data
-  next={()=>{fetchData(page)
+  next={()=>{
+    fetchData(page)
     console.log(page)
     setPage(page+1)
   }}
   
-  hasMore={currentPost.length>0}
-  // endMessage={
-  //   <p style={{ textAlign: 'center' }}>
-  //     <b>Loading More</b>
-  //   </p>
-  // }
+  hasMore={currentPost?.length>0}
+  endMessage={
+    <p style={{ textAlign: 'center' }}>
+      <b>Loading More</b>
+    </p>
+  }
   // below props only if you need pull down functionality
   // refreshFunction={this.refresh}
   refreshFunction={()=>{
     setRefresh(true)
   }}
-  pullDownToRefresh
-  pullDownToRefreshThreshold={50}
-  pullDownToRefreshContent={
-    <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
-  }
-  releaseToRefreshContent={
-    <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
-  }
 >
-      {loading ? "Fetching Posts..." :
+      {
         posts.map((post, id) => {
           return <Post onUpdate={()=>{
             const temp = JSON.parse(JSON.stringify(posts))

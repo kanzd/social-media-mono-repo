@@ -29,7 +29,7 @@ const Comments = ({ postId,setCommentsLength,showComment }) => {
         };
 
         fetchComments();
-    }, [postId, fetchComments]);
+    }, [fetchComments]);
     if(showComment){
     return (
         <>
