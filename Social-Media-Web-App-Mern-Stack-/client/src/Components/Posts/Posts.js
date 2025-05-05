@@ -58,7 +58,7 @@ const Posts = () => {
     setPage(page+1)
   }}
   
-  hasMore={currentPost.length>0}
+  hasMore={currentPost?.length>0}
   endMessage={
     <p style={{ textAlign: 'center' }}>
       <b>Loading More</b>
