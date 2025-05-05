@@ -7,11 +7,11 @@ const AddComment = ({ postId, handleFetchComments }) => {
     const [commentText, setCommentText] = useState('');
     const { user } = useSelector((state) => state.authReducer.authData);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (commentText.trim()) {
-            addComment(postId, user._id, commentText);
+            await addComment(postId, user._id, commentText);
             setCommentText('');
             handleFetchComments();
         }
