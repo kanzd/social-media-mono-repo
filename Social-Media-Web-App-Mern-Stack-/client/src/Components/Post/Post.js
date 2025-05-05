@@ -6,7 +6,9 @@ import Like from '../../Img/like.png';
 import Notlike from '../../Img/notlike.png';
 import WhatsAppLogo from '../../Img/whatsapp.png';
 import InstagramLogo from '../../Img/Instagram.png';
+import TelegramLogo from '../../Img/telegram.png';
 import XLogo from '../../Img/xlogo.png';
+import CopyLogo from '../../Img/copy.svg';
 import { useSelector } from 'react-redux';
 import { likePost } from '../../api/PostRequest';
 import { getPostComments } from "../../api/CommentRequest";
@@ -31,10 +33,12 @@ const Post = ({ data, id, onUpdate }) => {
   }
   
   const handleComment = () => {
+    setShowShareOptions(false);
     setShowComment(prev => !prev);
   }
 
   const handleShare = () => {
+    setShowComment(false);
     let mediaLink = "";
     if(data.image) {
       mediaLink = data.image;
@@ -93,24 +97,38 @@ const Post = ({ data, id, onUpdate }) => {
       {showShareOptions && (
         <div className="shareOptionsModal">
           <div className="shareOptionsContent">
-            <p>Share via:</p>
             <button style={{ marginRight: '20px' }} onClick={() => {
               window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareLink)}`, '_blank');
               setShowShareOptions(false);
             }}>
               <img src={WhatsAppLogo} alt="WhatsApp" style={{ width: '30px', height: '30px' }} />
             </button>
-            <button style={{ marginRight: '20px' }} onClick={() => {
+            {/* <button style={{ marginRight: '20px' }} onClick={() => {
               window.open(`https://www.instagram.com/`, '_blank');
               setShowShareOptions(false);
             }}>
               <img src={InstagramLogo} alt="Instagram" style={{ width: '30px', height: '30px' }} />
-            </button>
+            </button> */}
             <button style={{ marginRight: '20px' }} onClick={() => {
-              window.open(`https://x.com/`, '_blank');
+              window.open(`https://twitter.com/intent/tweet?text=${shareLink}`, '_blank');
               setShowShareOptions(false);
             }}>
               <img src={XLogo} alt="X" style={{ width: '30px', height: '30px' }} />
+            </button>
+            <button style={{ marginRight: '20px' }} onClick={() => {
+              window.open(`https://t.me/share/url?url=${shareLink}`, '_blank');
+              setShowShareOptions(false);
+            }}>
+              <img src={TelegramLogo} alt="Telegram" style={{ width: '30px', height: '30px' }} />
+            </button>
+            <button style={{ marginRight: '20px' }} onClick={() => {
+              navigator.clipboard.writeText(shareLink)
+                .then(() => {
+                  toast.success("Link copied to clipboard!");
+                })
+                .catch((err) => toast.error("Failed to copy link: " + err));
+            }}>
+              <img src={CopyLogo} alt="Copy" style={{ width: '30px', height: '30px' }} />
             </button>
           </div>
         </div>
