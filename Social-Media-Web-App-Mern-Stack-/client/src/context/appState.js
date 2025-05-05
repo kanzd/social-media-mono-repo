@@ -97,7 +97,6 @@ const ChatState = (props) => {
   useEffect(()=>{
     if(localStorage.getItem("token")){
     setIsAuthenticated(true)
-    console.log('fetch data')
     // fetchData()
     }
     else{
