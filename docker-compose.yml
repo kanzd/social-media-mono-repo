@@ -10,7 +10,7 @@ services:
   social-be:
     build:
       context: ./Social-Media-Web-App-Mern-Stack-/Server/
-      dockerfile: Dockerfile
+      dockerfile: DockerFile
     ports:
       - "4000:4000"
     volumes:
@@ -23,7 +23,7 @@ services:
   chat-be:
     build:
       context: ./mern-chat-app/backend/
-      dockerfile: Dockerfile
+      dockerfile: DockerFile
     ports:
       - "5000:5000"
     volumes:
@@ -36,7 +36,7 @@ services:
   social-fe:
     build:
       context: ./Social-Media-Web-App-Mern-Stack-/client/
-      dockerfile: Dockerfile
+      dockerfile: DockerFile
     container_name: social-fe
     volumes:
       - social-fe:/app
