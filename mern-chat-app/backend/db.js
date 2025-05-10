@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./.env" });
 
 
-const connection = process.env.MONGO_URI || 'mongodb://localhost:27017/hik8';
+const connection = process.env.MONGO_URI || 'mongo://localhost:27017/hik8';
 
 const connectDB = async () => {
   try {

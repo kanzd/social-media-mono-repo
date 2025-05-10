@@ -24,7 +24,7 @@ app.use(cors());
 dotenv.config();
 
 
-const connection = process.env.MONGO_URI || 'mongodb://localhost:27017/hik8';
+const connection = process.env.MONGO_URI || 'mongo://localhost:27017/hik8';
 mongoose.connect
     (connection, { useNewUrlParser: true, useUnifiedTopology: true,dbName: "hik8", }
     ).then(() =>
