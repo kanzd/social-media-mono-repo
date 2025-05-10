@@ -1,52 +1,56 @@
+version: '3'
 services:
   mongo:
     image: mongo:5
     ports:  
-    - "27017:27017"
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
+
   social-be:
-    build: ./social-media-repo/Social-Media-Web-App-Mern-Stack-/Server/
+    build:
+      context: ./Social-Media-Web-App-Mern-Stack-/Server/
+      dockerfile: Dockerfile
     ports:
       - "4000:4000"
     volumes:
-      - ./social-media-repo/Social-Media-Web-App-Mern-Stack-/Server/:app
+      - ./Social-Media-Web-App-Mern-Stack-/Server/:/app
     depends_on:
       - mongo
     environment:
       MONGO_URI: mongodb://mongo:27017/hik8
+
   chat-be:
-    build: ./mern-chat-app/backend/
+    build:
+      context: ./mern-chat-app/backend/
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     volumes:
-      - ./mern-chat-app/backend/:app
+      - ./mern-chat-app/backend/:/app
     depends_on:
       - mongo
     environment:
       MONGO_URI: mongodb://mongo:27017/hik8
+
   social-fe:
-    build: ./social-media-repo/Social-Media-Web-App-Mern-Stack-/client/
+    build:
+      context: ./Social-Media-Web-App-Mern-Stack-/client/
+      dockerfile: Dockerfile
     container_name: social-fe
     volumes:
       - social-fe:/app
-  chat-fe:
-    build: ./social-media-repo/Social-Media-Web-App-Mern-Stack-/client/
-    container_name: chat-fe
-    volumes:
-      - chat-fe:app
+
   nginx:
     image: nginx:alpine
     ports:
       - "80:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - chat-fe:/usr/share/nginx/html/Chat-FE
       - social-fe:/usr/share/nginx/html/social-FE
     depends_on:
-      - chat-fe
       - social-fe
+
 volumes:
   mongo-data:
-  chat-fe:
   social-fe:
