@@ -4,12 +4,12 @@ FROM node:20
 # Set working directory
 WORKDIR /app
 
+# Copy source code
+COPY . .
+
 # Copy package files and install dependencies
 COPY package.json ./
 RUN npm install
-
-# Copy source code
-COPY . .
 
 # Remove package-lock.json if present
 RUN rm -f package-lock.json
