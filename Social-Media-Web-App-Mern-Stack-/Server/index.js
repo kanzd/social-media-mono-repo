@@ -28,7 +28,7 @@ const connection = 'mongodb://mongo:27017/'
 mongoose.connect
     (connection, { useNewUrlParser: true, useUnifiedTopology: true,dbName: "hik8", }
     ).then(() =>
-        app.listen(4000, () => console.log(`listening at ${4000}`))
+        app.listen(4000,'0.0.0.0', () => console.log(`listening at ${4000}`))
     ).catch((error) =>
         console.log(error)
     )
