@@ -38,6 +38,8 @@ services:
     build:
       context: ./Social-Media-Web-App-Mern-Stack-/client/
       dockerfile: DockerFile
+    ports:
+      - "3000:80"
     container_name: social-fe
     networks:
       - mern
