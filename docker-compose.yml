@@ -6,6 +6,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - mern
 
   social-be:
     build:
@@ -19,6 +21,8 @@ services:
       - mongo
     environment:
       MONGO_URI: mongodb://mongo:27017/hik8
+    networks:
+      - mern
 
   chat-be:
     build:
@@ -32,6 +36,8 @@ services:
       - mongo
     environment:
       MONGO_URI: mongodb://mongo:27017/hik8
+    networks:
+      - mern
 
   social-fe:
     build:
@@ -40,6 +46,8 @@ services:
     container_name: social-fe
     volumes:
       - social-fe:/app
+    networks:
+      - mern
 
   nginx:
     image: nginx:alpine
@@ -54,3 +62,5 @@ services:
 volumes:
   mongo-data:
   social-fe:
+networks:
+  mern:
