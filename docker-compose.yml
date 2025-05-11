@@ -15,8 +15,6 @@ services:
       dockerfile: DockerFile
     ports:
       - "4000:4000"
-    volumes:
-      - ./Social-Media-Web-App-Mern-Stack-/Server/:/app
     depends_on:
       - mongo
     environment:
@@ -30,8 +28,6 @@ services:
       dockerfile: DockerFile
     ports:
       - "5000:5000"
-    volumes:
-      - ./mern-chat-app/backend/:/app
     depends_on:
       - mongo
     environment:
@@ -44,8 +40,6 @@ services:
       context: ./Social-Media-Web-App-Mern-Stack-/client/
       dockerfile: DockerFile
     container_name: social-fe
-    volumes:
-      - social-fe:/app
     networks:
       - mern
 
@@ -61,6 +55,5 @@ services:
 
 volumes:
   mongo-data:
-  social-fe:
 networks:
   mern:
