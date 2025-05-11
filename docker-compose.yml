@@ -13,7 +13,7 @@ services:
       context: ./Social-Media-Web-App-Mern-Stack-/Server/
       dockerfile: DockerFile
     ports:
-      - "4000:4000"
+      - "4000:2053"
     depends_on:
       - mongo
     environment:
@@ -26,7 +26,7 @@ services:
       context: ./mern-chat-app/backend/
       dockerfile: DockerFile
     ports:
-      - "5000:5000"
+      - "5000:8443"
     depends_on:
       - mongo
     environment:
