@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://stage.hik8.com' });
+const API = axios.create({ baseURL: 'http://stage.hik8.com:4000' });
 
 export const logIn = (formData) => API.post('/auth/login', formData); 
 
