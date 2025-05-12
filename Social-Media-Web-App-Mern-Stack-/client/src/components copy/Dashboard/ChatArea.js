@@ -119,6 +119,7 @@ export const ChatArea = () => {
     });
 
     socket.on("receive-message", (data) => {
+      console.log('recived message')
       setMessageList((prev) => [...prev, data]);
       setTimeout(() => {
         document.getElementById("chat-box")?.scrollTo({
@@ -271,7 +272,6 @@ export const ChatArea = () => {
       senderId: user._id,
       imageUrl: fileUrl ? `${fileUrl}` : null,
     };
-
     socket.emit("send-message", data);
 
     const inputElem = document.getElementById("new-message");

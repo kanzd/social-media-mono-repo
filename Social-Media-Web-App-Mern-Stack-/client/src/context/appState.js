@@ -8,8 +8,8 @@ import io from "socket.io-client";
 // http://localhost:5000
 const hostName = "https://stage.hik8.com/api-chat-backend";
 var socket = io(hostName, {
-  transports: ['websocket'],  // Optional: ensures WebSocket is used
-  secure: true,  // Use SSL if your backend is using HTTPS
+  path: '/api-chat-backend/socket.io',
+  // transports: ['websocket'],            
   reconnect: true,  // Automatically reconnect if the connection drops
 });
 
