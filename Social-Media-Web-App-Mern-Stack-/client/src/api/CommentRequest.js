@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://stage.hik8.com:2053' });
+const API = axios.create({ baseURL: 'https://stage.hik8.com/api-backend' });
 
 export const getPostComments = (id) => API.get(`/comment/${id}/post_comments`);
 export const likeComment = (id, likedBy ) => API.put(`/comment/${id}/like_dislike`, { likedBy: likedBy });
