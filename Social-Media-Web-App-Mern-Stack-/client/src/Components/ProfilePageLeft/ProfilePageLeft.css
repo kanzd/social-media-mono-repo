@@ -5,3 +5,9 @@
     align-items: center;
     overflow: auto;
 }
+@media screen and (max-width: 768px) {
+    .ProfilePageLeft{
+        display: none;
+    }
+    
+}

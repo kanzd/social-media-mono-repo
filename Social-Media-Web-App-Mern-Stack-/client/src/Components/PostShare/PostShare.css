@@ -81,3 +81,11 @@
     object-fit: cover;
     border-radius: 0.5rem;
 }
+@media screen and (max-width: 500px) {
+    .PostShare{
+
+        gap: 0rem;
+    }
+    
+    
+}

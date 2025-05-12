@@ -253,11 +253,11 @@ const sendMessageHandler = async (data) => {
       imageUrl,
       seenBy: [],
     });
-
+    
     // update conversation latest message and increment unread count of receiver by 1
     conversation.latestmessage = text;
     conversation.unreadCounts.map((unread) => {
-      if (unread.userId.toString() == receiverId.toString()) {
+      if (unread?.userId?.toString() == receiverId?.toString()) {
         unread.count += 1;
       }
     });
