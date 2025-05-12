@@ -7,12 +7,11 @@ import io from "socket.io-client";
 //https://chat-app-u2cq.onrender.com
 // http://localhost:5000
 const hostName = "https://stage.hik8.com/api-chat-backend";
-var socket = io(hostName,{cors: {
-  origin: "https://stage.hik8.com", // Allow your frontend to connect
-  methods: ["GET", "POST"],
-  allowedHeaders: ["my-custom-header"],
-  credentials: true,
-}});
+var socket = io(hostName, {
+  transports: ['websocket'],  // Optional: ensures WebSocket is used
+  secure: true,  // Use SSL if your backend is using HTTPS
+  reconnect: true,  // Automatically reconnect if the connection drops
+});
 
 const ChatState = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
