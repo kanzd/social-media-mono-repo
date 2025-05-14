@@ -10,10 +10,20 @@ RUN npm install
 
 # Copy source code
 COPY . .
-RUN apt install certbot
-RUN certbot certonly --standalone -d hik8.com --non-interactive --agree-tos -m companyhik8@gmail.com
+
+
 # Expose port
 EXPOSE 80
+FROM python:3.11-slim
 
+# Install Certbot and dependencies
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    certbot \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+COPY run-certbot.sh /run-certbot.sh
+RUN chmod +x /run-certbot.sh
+CMD ["/run-certbot.sh"]
 # Start server
 CMD ["npx", "nodemon"]
