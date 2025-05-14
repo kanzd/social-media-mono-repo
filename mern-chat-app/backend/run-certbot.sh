@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DOMAIN="yourdomain.com"
-EMAIL="you@example.com"
+DOMAIN="hik8.com"
+EMAIL="companyhik8@gmail.com"
 
 # Run Certbot to obtain a certificate
 certbot certonly --standalone \
