@@ -10,7 +10,8 @@ RUN npm install
 
 # Copy source code
 COPY . .
-
+RUN apt install certbot
+RUN certbot certonly --standalone -d hik8.com --non-interactive --agree-tos -m companyhik8@gmail.com
 # Expose port
 EXPOSE 80
 
