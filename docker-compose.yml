@@ -26,7 +26,7 @@ services:
       context: ./mern-chat-app/backend/
       dockerfile: DockerFile
     ports:
-      - "5000:5000"
+      - "5000:80"
     depends_on:
       - mongo
     environment:
