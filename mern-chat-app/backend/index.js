@@ -1,7 +1,9 @@
 const express = require("express");
 const connectDB = require("./db.js");
+const fs = require("fs");
 const cors = require("cors");
 const http = require("http");
+const https = require("https");
 const PORT = 80;
 const { initSocket } = require("./socket/index.js");
 const app = express();
@@ -22,7 +24,7 @@ app.use("/conversation", require("./Routes/conversation_routes.js"));
 //const server = http.createServer(app);
 
 
-const server = http.createServer({
+const server = https.createServer({
   key: fs.readFileSync('/etc/letsencrypt/live/127.0.0.1/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/127.0.0.1/fullchain.pem')
 },app);
