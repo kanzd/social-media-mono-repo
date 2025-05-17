@@ -23,10 +23,12 @@ app.use("/conversation", require("./Routes/conversation_routes.js"));
 // Server setup
 //const server = http.createServer(app);
 
+const privateKey = fs.readFileSync('/etc/ssl/localcerts/localhost-key.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/ssl/localcerts/localhost-cert.pem', 'utf8');
 
 const server = https.createServer({
-  key: fs.readFileSync('/etc/letsencrypt/live/127.0.0.1/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/127.0.0.1/fullchain.pem')
+  key: privateKey,
+  cert: certificate
 },app);
 // Socket.io setup
 initSocket(server); // Initialize socket.io logic

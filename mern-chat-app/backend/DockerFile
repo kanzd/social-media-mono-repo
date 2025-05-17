@@ -11,18 +11,25 @@ RUN npm install
 COPY . .
 
 # Install Certbot and dependencies
-RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    certbot \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y \
+#     software-properties-common \
+#     certbot \
+#  && apt-get clean \
+#  && rm -rf /var/lib/apt/lists/*
+
+ RUN openssl genpkey -algorithm RSA \
+    -out /etc/ssl/localcerts/localhost-key.pem \ 
+    -pkeyopt rsa_keygen_bits:2048 && \ 
+    openssl req -new -key /etc/ssl/localcerts/localhost-key.pem \ 
+    -out /etc/ssl/localcerts/localhost-csr.pem -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=localhost" && \ 
+    openssl x509 -req -in /etc/ssl/localcerts/localhost-csr.pem -signkey /etc/ssl/localcerts/localhost-key.pem -out /etc/ssl/localcerts/localhost-cert.pem
 
 # Expose port
 EXPOSE 80
 
-COPY run-certbot.sh /run-certbot.sh
-COPY start.sh /start.sh
-RUN chmod +x /run-certbot.sh /start.sh
+# COPY run-certbot.sh /run-certbot.sh
+# COPY start.sh /start.sh
+# RUN chmod +x /run-certbot.sh /start.sh
 
 # Start server
-CMD ["/start.sh"]
+CMD ["npx","nodemon"]
