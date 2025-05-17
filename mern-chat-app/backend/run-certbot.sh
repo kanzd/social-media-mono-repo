@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOMAIN="localhost"
+DOMAIN="hik8.com"
 EMAIL="companyhik8@gmail.com"
 
 # Run Certbot to obtain a certificate

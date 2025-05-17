@@ -24,8 +24,8 @@ app.use("/conversation", require("./Routes/conversation_routes.js"));
 
 
 const server = http.createServer({
-  key: fs.readFileSync('/etc/letsencrypt/live/localhost/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/localhost/fullchain.pem')
+  key: fs.readFileSync('/etc/letsencrypt/live/hik8.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/hik8.com/fullchain.pem')
 },app);
 // Socket.io setup
 initSocket(server); // Initialize socket.io logic
