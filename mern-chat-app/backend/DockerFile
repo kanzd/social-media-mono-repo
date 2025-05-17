@@ -18,11 +18,11 @@ COPY . .
 #  && rm -rf /var/lib/apt/lists/*
 
  RUN openssl genpkey -algorithm RSA \
-    -out /etc/ssl/localcerts/localhost-key.pem \ 
+    -out localhost-key.pem \ 
     -pkeyopt rsa_keygen_bits:2048 && \ 
-    openssl req -new -key /etc/ssl/localcerts/localhost-key.pem \ 
-    -out /etc/ssl/localcerts/localhost-csr.pem -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=localhost" && \ 
-    openssl x509 -req -in /etc/ssl/localcerts/localhost-csr.pem -signkey /etc/ssl/localcerts/localhost-key.pem -out /etc/ssl/localcerts/localhost-cert.pem
+    openssl req -new -key localhost-key.pem \ 
+    -out localhost-csr.pem -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=localhost" && \ 
+    openssl x509 -req -in localhost-csr.pem -signkey localhost-key.pem -out localhost-cert.pem
 
 # Expose port
 EXPOSE 80
