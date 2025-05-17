@@ -4,7 +4,7 @@ const fs = require("fs");
 const cors = require("cors");
 const http = require("http");
 const https = require("https");
-const PORT = 80;
+const PORT = 443;
 const { initSocket } = require("./socket/index.js");
 const app = express();
 app.use(cors());
