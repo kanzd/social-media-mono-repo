@@ -23,8 +23,8 @@ app.use("/conversation", require("./Routes/conversation_routes.js"));
 // Server setup
 //const server = http.createServer(app);
 
-const privateKey = fs.readFileSync('./localhost-key.pem', 'utf8');
-const certificate = fs.readFileSync('./localhost-cert.pem', 'utf8');
+const privateKey = fs.readFileSync('./hik8-key.pem', 'utf8');
+const certificate = fs.readFileSync('./hik8-cert.pem', 'utf8');
 
 const server = https.createServer({
   key: privateKey,
