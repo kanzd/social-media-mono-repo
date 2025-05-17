@@ -1,6 +1,5 @@
 const express = require("express");
 const connectDB = require("./db.js");
-const fs = require('fs');
 const cors = require("cors");
 const http = require("http");
 const PORT = 80;
@@ -20,13 +19,8 @@ app.use("/message", require("./Routes/message_routes.js"));
 app.use("/conversation", require("./Routes/conversation_routes.js"));
 
 // Server setup
-//const server = http.createServer(app);
+const server = http.createServer(app);
 
-
-const server = http.createServer({
-  key: fs.readFileSync('/etc/letsencrypt/live/hik8.com/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/hik8.com/fullchain.pem')
-},app);
 // Socket.io setup
 initSocket(server); // Initialize socket.io logic
 
