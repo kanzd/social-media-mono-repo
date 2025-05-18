@@ -5,6 +5,7 @@ let io;
 
 const initSocket = (server) => {
   io = new Server(server, {
+    transports: ['websocket', 'polling'],
     cors: {
       origin: "*",
       allowedHeaders: ["my-custom-header"],
