@@ -33,7 +33,15 @@ services:
       MONGO_URI: mongodb://mongo:27017/hik8
     networks:
       - mern
-
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - mern
   social-fe:
     build:
       context: ./Social-Media-Web-App-Mern-Stack-/client/
@@ -46,5 +54,6 @@ services:
 
 volumes:
   mongo-data:
+  redis-data:
 networks:
   mern:
