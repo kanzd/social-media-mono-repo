@@ -18,6 +18,7 @@ services:
       - mongo
     environment:
       MONGO_URI: mongodb://mongo:27017/hik8
+    container_name: socialBe
     networks:
       - mern
 
@@ -31,6 +32,7 @@ services:
       - mongo
     environment:
       MONGO_URI: mongodb://mongo:27017/hik8
+    container_name: chatBe
     networks:
       - mern
   redis:
