@@ -105,7 +105,7 @@ export const timeline = async (req, res) => {
   
     try {
       // 1. Your own posts
-      const ownPosts = await postModel.find({ userId });
+      const ownPosts = await postModel.find({ userId }).populate('userId');
   
       // 2. Your followees’ posts
       const followingAgg = await UserModel.aggregate([
@@ -119,7 +119,7 @@ export const timeline = async (req, res) => {
           }
         },
         { $project: { followingPosts: 1, _id: 0 } }
-      ]);
+      ]).populate('userId');;
   
       const followingPosts = followingAgg[0]?.followingPosts || [];
   
@@ -135,7 +135,7 @@ export const timeline = async (req, res) => {
       if (combinedPosts.length < limit) {
         const randomPosts = await postModel.aggregate([
           { $sample: { size: 20 } }
-        ]);
+        ]).populate('userId');;
         combinedPosts = combinedPosts.concat(randomPosts);
       }
   

@@ -73,7 +73,10 @@ const Post = ({ data, id, onUpdate }) => {
         <span> <b>{data.name}</b> </span>
         <span>{data.desc}</span>
       </div>
-      
+      <div className="detail">
+        <span> <b>{data.name}</b> </span>
+        <span>{data.desc}</span>
+      </div>
       <img src={data.image ? data.image : " "} alt="" />
       {data.video && (
         <video controls>
