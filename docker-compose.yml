@@ -49,7 +49,7 @@ services:
       context: ./Social-Media-Web-App-Mern-Stack-/client/
       dockerfile: DockerFile
     ports:
-      - "81:3000"
+      - "81:80"
     container_name: social-fe
     networks:
       - mern
