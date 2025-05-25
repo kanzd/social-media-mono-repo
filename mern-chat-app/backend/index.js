@@ -35,6 +35,6 @@ initSocket(server); // Initialize socket.io logic
 
 // Start server and connect to database
 server.listen(PORT,'0.0.0.0', () => {
-  console.log(`🚀 Server started at http://localhost:${PORT}`);
+  console.log(`🚀 Server started at https://localhost:${PORT}`);
   connectDB();
 });
