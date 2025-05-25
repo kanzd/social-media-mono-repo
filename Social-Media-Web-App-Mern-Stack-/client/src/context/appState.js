@@ -7,7 +7,7 @@ import io from "socket.io-client";
 //https://chat-app-u2cq.onrender.com
 // http://localhost:5000
 const hostName = "https://stage.hik8.com/api-chat-backend";
-var socket = io(hostName);
+var socket = io(hostName,{transports:['websocket'],path:'/socket.io'});
 
 const ChatState = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
