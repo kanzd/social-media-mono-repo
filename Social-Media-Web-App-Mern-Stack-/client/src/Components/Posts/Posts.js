@@ -46,7 +46,6 @@ const Posts = () => {
   }else{
     posts=orderBy(uniqBy(posts,item => item._id.toString()), item => new Date(item.createdAt), 'desc');
   }
-  console.log(posts)
   return (
     <div id='postScroll' className='Posts'>
       <InfiniteScroll
