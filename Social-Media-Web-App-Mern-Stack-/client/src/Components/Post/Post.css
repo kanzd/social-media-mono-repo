@@ -23,3 +23,11 @@
 .detail{
     text-align: justify;
 }
+.profileSection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.profileName{
+    margin:0 10px;
+}

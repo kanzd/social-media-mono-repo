@@ -25,9 +25,19 @@ export const createPost = async (req, res) => {
     // }
     req.body.type==='image'?req.body.image=publicUrl:req.body.video=publicUrl
     // const { data, error } = await supabase.storage.from('hik8').upload(file.name, file)
-    const newPost = new postModel(req.body);
+    let newPost = new postModel(req.body)
+   
+  
     try {
-        await newPost.save();
+      newPost=await newPost.save();
+      newPost = await postModel.findById(newPost._id).populate('userId', '-password');
+      console.log(newPost)
+      const obj = newPost.toObject();
+      obj.user = obj.userId;  // rename the populated field to 'author'
+      obj.userId = post._id
+      delete obj.userId;        // remove the old field
+      newPost=obj
+  
         res.status(200).json(newPost)
     } catch (error) {
         res.status(500).json(error)
@@ -38,7 +48,14 @@ export const createPost = async (req, res) => {
 // Get a single post
 export const getPost = async (req, res) => {
   try {
-    const post = await postModel.findById(req.params.id);
+    let post = await postModel.findById(req.params.id).populate('userId','-password');
+   
+      const obj = post.toObject();
+      obj.user = obj.userId;  // rename the populated field to 'author'
+      obj.userId = post._id
+      delete obj.userId;        // remove the old field
+      post=obj
+  
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json(error);
@@ -105,8 +122,14 @@ export const timeline = async (req, res) => {
   
     try {
       // 1. Your own posts
-      const ownPosts = await postModel.find({ userId });
-  
+      let ownPosts = await postModel.find({ userId }).populate('userId','-password');
+      ownPosts = ownPosts.map(post => {
+        const obj = post.toObject();
+        obj.user = obj.userId;  // rename the populated field to 'author'
+        obj.userId = post._id
+        delete obj.userId;        // remove the old field
+        return obj;
+      });
       // 2. Your followees’ posts
       const followingAgg = await UserModel.aggregate([
         { $match: { _id: new mongoose.Types.ObjectId(userId) } },
@@ -118,14 +141,41 @@ export const timeline = async (req, res) => {
             as: 'followingPosts'
           }
         },
-        { $project: { followingPosts: 1, _id: 0 } }
-      ]);
+        {
+          $lookup: {
+            from: 'users', // must be the actual collection name (usually lowercase plural)
+            localField: 'userId',
+            foreignField: '_id',
+            as: 'user'
+          }
+        },
+        {
+          $unwind: '$user' // optional: flatten the joined user array
+        },
+        { $unset: 'user.password' },
+        { $project: { followingPosts: 1, _id: 0 } },
+        
+      ])
   
       const followingPosts = followingAgg[0]?.followingPosts || [];
   
       // 3. Posts you've interacted with
-      const liked = await postModel.find({ likes: userId });
-      const commented = await postModel.find({ 'comments.userId': userId });
+      let liked = await postModel.find({ likes: userId }).populate('userId','-password');
+      liked = liked.map(post => {
+        const obj = post.toObject();
+        obj.user = obj.userId;  // rename the populated field to 'author'
+        obj.userId = post._id
+        delete obj.userId;        // remove the old field
+        return obj;
+      });
+      let commented = await postModel.find({ 'comments.userId': userId }).populate('userId','-password');
+      commented = commented.map(post => {
+        const obj = post.toObject();
+        obj.user = obj.userId;  // rename the populated field to 'author'
+        obj.userId = post._id
+        delete obj.userId;        // remove the old field
+        return obj;
+      });
       const interestPosts = [...liked, ...commented];
   
       // 4. Combine posts
@@ -134,8 +184,21 @@ export const timeline = async (req, res) => {
       // Add random fallback if not enough posts
       if (combinedPosts.length < limit) {
         const randomPosts = await postModel.aggregate([
-          { $sample: { size: 20 } }
-        ]);
+          { $sample: { size: 20 } },
+          {
+            $lookup: {
+              from: 'users', // must be the actual collection name (usually lowercase plural)
+              localField: 'userId',
+              foreignField: '_id',
+              as: 'user'
+            }
+          },
+          {
+            $unwind: '$user' // optional: flatten the joined user array
+          },
+          { $unset: 'user.password' }
+          
+        ])
         combinedPosts = combinedPosts.concat(randomPosts);
       }
   
