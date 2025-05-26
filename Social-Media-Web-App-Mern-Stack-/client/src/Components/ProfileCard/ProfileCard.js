@@ -43,7 +43,7 @@ const ProfileCard = ({ location }) => {
             <div className="ProfileName">
                 <span>{userData.name}</span>
                 <span>{userData.worksAt ? userData.worksAt : "write about yourself..."}</span>
-                {pathLocation.pathname.split('/')[2] !== user._id && <UserFollow person={userData} justButton key={userData._id} />}
+                {pathLocation.pathname.includes('profile') && pathLocation.pathname.split('/')[2] !== user._id && <UserFollow person={userData} justButton key={userData._id} />}
             </div>
             
             <div className="followStatus">
