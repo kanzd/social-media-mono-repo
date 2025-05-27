@@ -65,7 +65,6 @@ export const ChatArea = () => {
     myChatList,
     isChatLoading,
   } = context;
-  console.log(messageList)
   const [typing, settyping] = useState(false);
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -121,7 +120,6 @@ export const ChatArea = () => {
 
     socket.on("receive-message", (data) => {
       setMessageList((prev) => [...prev, data]);
-      console.log(data)
       setTimeout(() => {
         document.getElementById("chat-box")?.scrollTo({
           top: document.getElementById("chat-box").scrollHeight,
