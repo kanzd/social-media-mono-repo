@@ -31,13 +31,11 @@ export const createPost = async (req, res) => {
     try {
       newPost=await newPost.save();
       newPost = await postModel.findById(newPost._id).populate('userId', '-password');
-      console.log(newPost)
       const obj = newPost.toObject();
       obj.user = obj.userId;  // rename the populated field to 'author'
-      obj.userId = post._id
-      delete obj.userId;        // remove the old field
+      obj.userId = obj.user._id  
       newPost=obj
-  
+      console.log(newPost)
         res.status(200).json(newPost)
     } catch (error) {
         res.status(500).json(error)
@@ -52,8 +50,7 @@ export const getPost = async (req, res) => {
    
       const obj = post.toObject();
       obj.user = obj.userId;  // rename the populated field to 'author'
-      obj.userId = post._id
-      delete obj.userId;        // remove the old field
+      obj.userId = obj.user._id
       post=obj
   
     res.status(200).json(post);
@@ -126,8 +123,7 @@ export const timeline = async (req, res) => {
       ownPosts = ownPosts.map(post => {
         const obj = post.toObject();
         obj.user = obj.userId;  // rename the populated field to 'author'
-        obj.userId = post._id
-        delete obj.userId;        // remove the old field
+        obj.userId = obj.user._id
         return obj;
       });
       // 2. Your followees’ posts
@@ -164,16 +160,14 @@ export const timeline = async (req, res) => {
       liked = liked.map(post => {
         const obj = post.toObject();
         obj.user = obj.userId;  // rename the populated field to 'author'
-        obj.userId = post._id
-        delete obj.userId;        // remove the old field
+        obj.userId = obj.user._id
         return obj;
       });
       let commented = await postModel.find({ 'comments.userId': userId }).populate('userId','-password');
       commented = commented.map(post => {
         const obj = post.toObject();
         obj.user = obj.userId;  // rename the populated field to 'author'
-        obj.userId = post._id
-        delete obj.userId;        // remove the old field
+        obj.userId = obj.user._id
         return obj;
       });
       const interestPosts = [...liked, ...commented];

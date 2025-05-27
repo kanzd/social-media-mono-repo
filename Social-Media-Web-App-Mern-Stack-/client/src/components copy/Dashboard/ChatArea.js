@@ -65,6 +65,7 @@ export const ChatArea = () => {
     myChatList,
     isChatLoading,
   } = context;
+  console.log(messageList)
   const [typing, settyping] = useState(false);
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
