@@ -29,7 +29,9 @@ const NewChats = (props) => {
     socket,
     user,
     myChatList,
+    setMessageList,
     setMyChatList,
+    activeChatId,
     setReceiver,
     setActiveChatId,
   } = context;
@@ -84,14 +86,27 @@ const NewChats = (props) => {
         },
         body: JSON.stringify(payload),
       });
-
+      await socket.emit("leave-chat", activeChatId);
+      
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
-
+      const messages = await fetch(`${hostName}/message/${data._id}/${user._id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const jsonData = await messages.json();
       setMyChatList([data, ...myChatList]);
+      setMessageList(jsonData);
       setReceiver(data.members[0]);
+      socket.emit("join-chat", { roomId: data._id, userId: user._id });
       setActiveChatId(data._id);
       props.setactiveTab(0);
 

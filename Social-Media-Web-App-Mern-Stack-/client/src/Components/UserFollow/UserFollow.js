@@ -4,7 +4,7 @@ import { followUser, unFollowUser } from '../../actions/UserAction';
 
 
 
-const UserFollow = ({ person }) => {
+const UserFollow = ({ person,justButton=false }) => {
 
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.authReducer.authData);
@@ -23,13 +23,13 @@ const UserFollow = ({ person }) => {
     return (
         <div className="follower">
 
-            <div>
+            {!justButton && <div>
                 <img src={person.profilePicture ?  person.profilePicture : serverPublic + "defaultProfile.png"} alt="" className='followerImg' />
                 <div className="name">
                     <span>{person.name}</span>
                     <span>@{person.name} </span>
                 </div>
-            </div>
+            </div>}
 
             <button className='button fc-button' onClick={handleFollow}>
                 {following ? "Unfollow" : "Follow"}
