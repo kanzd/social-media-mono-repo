@@ -36,20 +36,20 @@ module.exports = (io, socket) => {
   socket.on("join-chat", async (data) => {
     const { roomId, userId } = data;
 
-    // console.log("User joined chat room", roomId);
-    // const conv = await Conversation.findById(roomId);
-    socket.join('3');
+    console.log("User joined chat room", roomId);
+    const conv = await Conversation.findById(roomId);
+    socket.join(roomId);
 
-    // // set joined user unread to 0
-    // conv.unreadCounts = conv.unreadCounts.map((unread) => {
-    //   if (unread.userId == userId) {
-    //     unread.count = 0;
-    //   }
-    //   return unread;
-    // });
-    // await conv.save({ timestamps: false });
+    // set joined user unread to 0
+    conv.unreadCounts = conv.unreadCounts.map((unread) => {
+      if (unread.userId == userId) {
+        unread.count = 0;
+      }
+      return unread;
+    });
+    await conv.save({ timestamps: false });
 
-    io.to('3').emit("user-joined-room", userId);
+    io.to(roomId).emit("user-joined-room", userId);
   });
 
   // Leave chat room
@@ -60,96 +60,94 @@ module.exports = (io, socket) => {
   const handleSendMessage = async (data) => {
     console.log("Received message: ");
 
-    // var isSentToBot = false;
+    var isSentToBot = false;
 
     const { conversationId, senderId, text, imageUrl } = data;
-    // const conversation = await Conversation.findById(conversationId).populate(
-    //   "members"
-    // );
+    const conversation = await Conversation.findById(conversationId).populate(
+      "members"
+    );
 
     // processing for AI chatbot
-    // conversation.members.forEach(async (member) => {
-    //   if (member._id != senderId && member.email.endsWith("bot")) {
-    //     // this member is a bot
-    //     isSentToBot = true;
-    //     // send typing event
-    //     io.to(conversationId).emit("typing", { typer: member._id.toString() });
-    //     // generating AI response
+    conversation.members.forEach(async (member) => {
+      if (member._id != senderId && member.email.endsWith("bot")) {
+        // this member is a bot
+        isSentToBot = true;
+        // send typing event
+        io.to(conversationId).emit("typing", { typer: member._id.toString() });
+        // generating AI response
 
-    //     const mockUserMessage = {
-    //       id_: Date.now().toString(),
-    //       conversationId: conversationId,
-    //       senderId: senderId,
-    //       text: text,
-    //       seenBy: [
-    //         {
-    //           user: member._id.toString(),
-    //           seenAt: new Date(),
-    //         },
-    //       ],
-    //       imageUrl: imageUrl,
-    //       createdAt: new Date(),
-    //       updatedAt: new Date(),
-    //     };
+        const mockUserMessage = {
+          id_: Date.now().toString(),
+          conversationId: conversationId,
+          senderId: senderId,
+          text: text,
+          seenBy: [
+            {
+              user: member._id.toString(),
+              seenAt: new Date(),
+            },
+          ],
+          imageUrl: imageUrl,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
 
-    //     io.to(conversationId).emit("receive-message", mockUserMessage);
+        io.to(conversationId).emit("receive-message", mockUserMessage);
 
-    //     const responseMessage = await getAiResponse(
-    //       text,
-    //       senderId,
-    //       conversationId
-    //     );
+        const responseMessage = await getAiResponse(
+          text,
+          senderId,
+          conversationId
+        );
 
-    //     if (responseMessage == -1) {
-    //       return;
-    //     }
+        if (responseMessage == -1) {
+          return;
+        }
 
-    //     io.to(conversationId).emit("receive-message", responseMessage);
-    //     io.to(conversationId).emit("stop-typing", {
-    //       typer: member._id.toString(),
-    //     });
-    //   }
-     
-    // });
-    // io.to(conversationId).emit("receive-message", responseMessage);
+        io.to(conversationId).emit("receive-message", responseMessage);
+        io.to(conversationId).emit("stop-typing", {
+          typer: member._id.toString(),
+        });
+      }
+    });
 
-    // if (isSentToBot) {
-    //   return;
-    // }
+    if (isSentToBot) {
+      return;
+    }
 
-    // // processing for personal chat
-    // const receiverId = conversation.members.find(
-    //   (member) => member._id != senderId
-    // )._id;
+    // processing for personal chat
+    const receiverId = conversation.members.find(
+      (member) => member._id != senderId
+    )._id;
 
-    // const receiverPersonalRoom = io.sockets.adapter.rooms.get(
-    //   receiverId.toString()
-    // );
+    const receiverPersonalRoom = io.sockets.adapter.rooms.get(
+      receiverId.toString()
+    );
 
-    // let isReceiverInsideChatRoom = false;
+    let isReceiverInsideChatRoom = false;
 
-    // if (receiverPersonalRoom) {
-    //   const receiverSid = Array.from(receiverPersonalRoom)[0];
-    //   isReceiverInsideChatRoom = io.sockets.adapter.rooms
-    //     .get(conversationId)
-    //     .has(receiverSid);
-    // }
+    if (receiverPersonalRoom) {
+      const receiverSid = Array.from(receiverPersonalRoom)[0];
+      isReceiverInsideChatRoom = io.sockets.adapter.rooms
+        .get(conversationId)
+        .has(receiverSid);
+    }
     const message = await sendMessageHandler({
       text,
       imageUrl,
       senderId,
-      conversationId:'3',
-      receiverId:'32',
-      isReceiverInsideChatRoom:true,
+      conversationId,
+      receiverId,
+      isReceiverInsideChatRoom,
     });
 
-    io.to('3').emit("receive-message",message);
+    io.to(conversationId).emit("receive-message", message);
 
-    // // sending notification to receiver
-    // if (!isReceiverInsideChatRoom) {
-    //   console.log("Emitting new message to: ", receiverId.toString());
-    //   io.to(receiverId.toString()).emit("new-message-notification", message);
-    // }
+    // sending notification to receiver
+    if (!isReceiverInsideChatRoom) {
+      console.log("Emitting new message to: ", receiverId.toString());
+      io.to(receiverId.toString()).emit("new-message-notification", message);
+    }
   };
 
   // Send message

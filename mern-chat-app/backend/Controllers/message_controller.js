@@ -244,7 +244,7 @@ const sendMessageHandler = async (data) => {
     receiverId,
     isReceiverInsideChatRoom,
   } = data;
-  // const conversation = await Conversation.findById(conversationId);
+  const conversation = await Conversation.findById(conversationId);
   if (!isReceiverInsideChatRoom) {
     const message = await Message.create({
       conversationId,
@@ -255,13 +255,13 @@ const sendMessageHandler = async (data) => {
     });
     
     // update conversation latest message and increment unread count of receiver by 1
-    // conversation.latestmessage = text;
-    // conversation.unreadCounts.map((unread) => {
-    //   if (unread?.userId?.toString() == receiverId?.toString()) {
-    //     unread.count += 1;
-    //   }
-    // });
-    // await conversation.save();
+    conversation.latestmessage = text;
+    conversation.unreadCounts.map((unread) => {
+      if (unread?.userId?.toString() == receiverId?.toString()) {
+        unread.count += 1;
+      }
+    });
+    await conversation.save();
     return message;
   } else {
     // create new message with seenby receiver
@@ -277,8 +277,8 @@ const sendMessageHandler = async (data) => {
         },
       ],
     });
-    // conversation.latestmessage = text;
-    // await conversation.save();
+    conversation.latestmessage = text;
+    await conversation.save();
     return message;
   }
 };
