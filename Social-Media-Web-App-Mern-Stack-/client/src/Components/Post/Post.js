@@ -13,8 +13,9 @@ import { useSelector } from 'react-redux';
 import { likePost } from '../../api/PostRequest';
 import { getPostComments } from "../../api/CommentRequest";
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import Comments from '../Comments/Comments';
-
+const serverPublic = 'https://ybutcjrfzigxxjnxybta.supabase.co/storage/v1/object/public/hik8/';
 const Post = ({ data, id, onUpdate }) => {
 
   const { user } = useSelector((state) => state.authReducer.authData)
@@ -66,13 +67,19 @@ const Post = ({ data, id, onUpdate }) => {
   useEffect(() => {
     setLikes(data.likes.length)
   }, [data])
-
+  console.log(data)
   return (
     <div className='Post' key={id}>
+       <div className="profileSection">
+       <img src={data.user.profilePicture ?  data.user.profilePicture : serverPublic + "defaultProfile.png"} alt="" className='followerImg' />
+       <Link className='profileName' style={{ textDecoration: "none", color: "inherit" }} to={`/profile/${data.user._id}`}>{data.user.name}</Link>
+        {/* <span className='profileName' onClick={()=>{}}><b></b></span> */}
+      </div>
       <div className="detail">
         <span> <b>{data.name}</b> </span>
         <span>{data.desc}</span>
       </div>
+
       
       <img src={data.image ? data.image : " "} alt="" />
       {data.video && (

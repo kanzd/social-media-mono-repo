@@ -41,12 +41,13 @@ const Posts = () => {
   const fetchData = (page)=>{
     dispatch(getTimelinePosts(user._id,page))
   }
+  console.log(posts,params)
   if (params.id) {
     posts = orderBy(uniqBy(posts.filter((post) => post.userId === params.id), item => item._id.toString()), item => new Date(item.createdAt), 'desc');
   }else{
     posts=orderBy(uniqBy(posts,item => item._id.toString()), item => new Date(item.createdAt), 'desc');
   }
-  console.log(posts)
+  console.log(posts,params)
   return (
     <div id='postScroll' className='Posts'>
       <InfiniteScroll
