@@ -121,6 +121,7 @@ export const ChatArea = () => {
 
     socket.on("receive-message", (data) => {
       setMessageList((prev) => [...prev, data]);
+      console.log(data)
       setTimeout(() => {
         document.getElementById("chat-box")?.scrollTo({
           top: document.getElementById("chat-box").scrollHeight,
