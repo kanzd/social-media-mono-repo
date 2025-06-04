@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 4000
 
 # Start server
-CMD ["npm", "nodemon"]
+CMD ["npx", "nodemon"]
