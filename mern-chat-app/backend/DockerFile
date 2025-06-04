@@ -32,4 +32,4 @@ EXPOSE 443
 # RUN chmod +x /run-certbot.sh /start.sh
 
 # Start server
-CMD ["npx","nodemon"]
+CMD ["node","index.js"]
